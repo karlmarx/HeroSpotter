@@ -3,7 +3,6 @@ package com.karlmarxindustries.herospotter.dao;
 import com.karlmarxindustries.herospotter.dto.Location;
 
 import java.util.List;
-
 public class LocationDaoImpl implements LocationDao {
     @Override
     public Location getLocationById(int id) {

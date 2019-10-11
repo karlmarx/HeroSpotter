@@ -1,7 +1,9 @@
 package com.karlmarxindustries.herospotter.dao;
 
 import com.karlmarxindustries.herospotter.dto.Sighting;
+import com.karlmarxindustries.herospotter.dto.Super;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface SightingDao {
@@ -11,6 +13,6 @@ public interface SightingDao {
     void updateSighting(Sighting course);
     void deleteSightingById(int id);
 
-    List<Sighting> getAllSightingsForSuper();
-    List<Sighting> getAllSightingsForDate();
+    List<Sighting> findBySuper(Super super);
+    List<Sighting> findByDate(LocalDate date);
 }

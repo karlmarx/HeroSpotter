@@ -19,7 +19,7 @@ public class Super  {
     String name;
     @Column
     String description;
-    @Column(name="is_villian")
+    @Column(name="is_villain")
     boolean isVillain;
     @ManyToMany
             @JoinTable(name="supers_powers",

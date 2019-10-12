@@ -15,23 +15,23 @@ import java.util.List;
 public class Organization {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
-    private int id;
+     int id;
     @Column
-    private double latitude;
+     double latitude;
     @Column
-    private double longitude;
+     double longitude;
     @Column(nullable = false)
-    private String name;
+     String name;
     @Column
-    private String email;
+     String email;
     @Column
-    private String url;
+     String url;
     @Column(name="phone_number")
-    private String phoneNumber;
+     String phoneNumber;
     @Column
-    private String description;
+     String description;
     @ManyToMany(mappedBy="organizations")
-    private List<Super> superMembers;
+     List<Super> superMembers;
     @Column
     String address;
 }

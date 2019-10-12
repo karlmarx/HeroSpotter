@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--/*/ <th:block th:include="fragments/stylingFragment.html :: head">
+            </th:block> /*/-->
+    <link href="../css/style.css" rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+
+<body>
+<div th:replace="fragments/stylingFragment.html:: navbar"></div>
+
+<main role="main" class="container">
+
+    <div class="container">
+        <h1>Powers</h1>
+
+        <table id="power-table" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Unique</th>
+                <th>Details</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="power:${powers}">
+                <td th:text="${power.name}">Name</td>
+                <td th:text="${power.description}">Address</td>
+                <td><div th:if="${power.unique} == true"><i class="fas fa-check-square"></i></div><div th:if="${power.unique} == false"><i class="fas fa-times"></i></div></td>
+                <td><i class="fas fa-info-circle"></i></td>
+                <td><i class="fas fa-edit"></i></td>
+                <td><i class="fas fa-minus-square"></i></td>
+            </tr>
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Unique</th>
+                <th>Details</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </tfoot>
+        </table>
+
+
+    </div>
+    <div id="add form">
+        <h3>Add Power</h3>
+        <form type="form" action="/addPowers" method="POST">
+            <div class="form-group">
+                <label class="col-4" for="name">Power Name</label>
+                <input type="text" class="col-8 form-control" id="name" name="name"/>
+            </div>
+            <div class="form-group">
+                <label class="col-4" for="description">description</label>
+                <input type="text" class="col-8 form-control" id="description" name="description"/>
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="isUnique" name="isUnique"/>
+
+                    <label class="custom-control-label" for="isUnique" >Check here if this power is unique (i.e. only one super can have it)</label>
+
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Power</button>
+        </form>
+    </div>
+</main>
+
+
+
+
+
+
+
+<!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+
+
+<script src="../js/hero.js" th:href="@{/js/hero.js}"></script>
+<div th:replace="fragments/stylingFragment.html :: includes"></div>
+</body>
+</html>

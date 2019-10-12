@@ -21,7 +21,7 @@ CREATE TABLE organizations(
     url VARCHAR(2083),
     phone_number VARCHAR(20),
         address VARCHAR(200),
-    description TINYTEXT    
+    description TEXT
     );
 CREATE TABLE sightings(
     id SMALLINT PRIMARY KEY AUTO_INCREMENT,
@@ -42,7 +42,7 @@ CREATE TABLE locations(
 CREATE TABLE powers(
     id SMALLINT PRIMARY KEY AUTO_INCREMENT,
     power_name VARCHAR(40) NOT NULL,
-    description TINYTEXT,
+    description TEXT,
    	is_unique BOOLEAN DEFAULT 0
 );
 CREATE TABLE supers_powers(

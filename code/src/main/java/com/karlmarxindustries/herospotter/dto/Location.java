@@ -19,4 +19,6 @@ public class Location {
     double longitude;
     @Column
     String name;
+    @Column
+    String address;
 }

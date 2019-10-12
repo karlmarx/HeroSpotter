@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface SuperRepository extends JpaRepository<Super, Integer> {
-    public List<Super> findByOrganization(Organization organization);
+    public List<Super> findByOrganizations(Organization organization);
 }

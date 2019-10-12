@@ -17,7 +17,7 @@ public class Sighting {
     LocalDate date;
     @ManyToOne
     @JoinColumn(name="super_id", nullable = false)
-    Super super_;
+    Super superPerson;
     @ManyToOne
     @JoinColumn(name="location_id", nullable = false)
     Location location;
@@ -27,4 +27,5 @@ public class Sighting {
     boolean isApproved;
     @Column(name="reporter_name")
     String reporterName;
+
 }

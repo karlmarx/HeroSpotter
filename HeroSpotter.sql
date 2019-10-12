@@ -19,7 +19,8 @@ CREATE TABLE organizations(
     latitude DECIMAL(10,6),
     longitude DECIMAL(10,6),
     url VARCHAR(2083),
-    phone_number VARCHAR(20), 
+    phone_number VARCHAR(20),
+        address VARCHAR(200),
     description TINYTEXT    
     );
 CREATE TABLE sightings(
@@ -35,7 +36,8 @@ CREATE TABLE locations(
     id SMALLINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(40),
    	latitude DECIMAL(10,6) NOT NULL,
-    longitude DECIMAL(10,6) NOT NULL
+    longitude DECIMAL(10,6) NOT NULL,
+    address VARCHAR(200)
     );
 CREATE TABLE powers(
     id SMALLINT PRIMARY KEY AUTO_INCREMENT,

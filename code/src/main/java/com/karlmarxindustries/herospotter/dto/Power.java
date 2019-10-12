@@ -3,6 +3,7 @@ package com.karlmarxindustries.herospotter.dto;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity(name="powers")
@@ -16,4 +17,6 @@ public class Power {
     String description;
     @Column(name="is_unique")
     boolean isUnique;
+    @ManyToMany(mappedBy="powers")
+    private List<Super> superMembers;
 }

@@ -8,6 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface SightingRepository extends JpaRepository<Sighting, Integer> {
-    List<Sighting> findBySuper(Super super_);
+    List<Sighting> findBySuperPerson(Super superPerson);
     List<Sighting> findByDate(LocalDate date);
 }

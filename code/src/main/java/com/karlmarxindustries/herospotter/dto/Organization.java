@@ -28,4 +28,6 @@ public class Organization {
     private String description;
     @ManyToMany(mappedBy="organizations")
     private List<Super> superMembers;
+    @Column
+    String address;
 }

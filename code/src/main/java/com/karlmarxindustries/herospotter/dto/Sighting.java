@@ -1,13 +1,17 @@
 package com.karlmarxindustries.herospotter.dto;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Blob;
 import java.time.LocalDate;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name="sightings")
 public class Sighting {
     @GeneratedValue(strategy= GenerationType.IDENTITY)

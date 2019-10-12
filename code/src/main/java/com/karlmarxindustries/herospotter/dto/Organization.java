@@ -1,11 +1,15 @@
 package com.karlmarxindustries.herospotter.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name="organizations")
 //@AttributeOverride(name="id", column=@Column(name="org_id"))
 public class Organization {

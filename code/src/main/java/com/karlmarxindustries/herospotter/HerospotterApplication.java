@@ -8,7 +8,7 @@ public class HerospotterApplication  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HerospotterApplication.class, args);
-		System.out.println("hello");
+
 
 	}
 

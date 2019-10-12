@@ -1,6 +1,11 @@
 package com.karlmarxindustries.herospotter.dao;
 
+import com.karlmarxindustries.herospotter.dto.Power;
+import com.karlmarxindustries.herospotter.dto.Super;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PowerRepository extends JpaRepository<> {
+import java.util.List;
+
+public interface PowerRepository extends JpaRepository<Power, Integer> {
+    public List<Power> getPowersForSuper(Super super_);
 }

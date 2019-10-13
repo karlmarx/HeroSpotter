@@ -1,10 +1,7 @@
 package com.karlmarxindustries.herospotter.controller;
 
 import com.karlmarxindustries.herospotter.dao.*;
-import com.karlmarxindustries.herospotter.dto.Location;
-import com.karlmarxindustries.herospotter.dto.Organization;
-import com.karlmarxindustries.herospotter.dto.Power;
-import com.karlmarxindustries.herospotter.dto.Super;
+import com.karlmarxindustries.herospotter.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +80,16 @@ public class MVCController {
         model.addAttribute("organizations", organizationList);
         return "supers";
     }
-
+    @GetMapping("/sightings")
+    public String displaySightings(Model model) {
+        List<Super> superList = supers.findAll();
+        model.addAttribute("supers", superList);
+        List<Location> locationList = locations.findAll();
+        model.addAttribute("locations", locationList);
+        List<Sighting> sightingList = sightings.findAll();
+        model.addAttribute("sightings", sightingList);
+        return "sightings";
+    }
     @PostMapping("/addPowers")
     public String addPower(Power power, HttpServletRequest request) {
         if (request.getParameter("isUnique")!=null) {
@@ -114,6 +121,19 @@ public class MVCController {
         }
         supers.save(super_);
         return "redirect:/supers";
+    }
+    @PostMapping("/addSighting")
+    public String addSighting(Sighting sighting, HttpServletRequest request){
+        String superId = request.getParameter("super");
+        String locationId = request.getParameter("location");
+        LocalDate localDate = LocalDate.parse(request.getParameter("date"));
+
+        sighting.setDate(localDate);
+        sighting.setSuperPerson(supers.findById(Integer.parseInt(superId)).orElse(null));
+        sighting.setLocation(locations.findById(Integer.parseInt(locationId)).orElse(null));
+        sighting.setApproved(false);
+        sightings.save(sighting);
+        return "redirect:/sightings";
     }
 }
 

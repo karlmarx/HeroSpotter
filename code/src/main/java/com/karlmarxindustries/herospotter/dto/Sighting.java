@@ -4,6 +4,7 @@ package com.karlmarxindustries.herospotter.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Blob;
@@ -18,6 +19,7 @@ public class Sighting {
     @Id
     int id;
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate date;
     @ManyToOne
     @JoinColumn(name="super_id", nullable = false)

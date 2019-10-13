@@ -122,6 +122,7 @@ public class MVCController {
         supers.save(super_);
         return "redirect:/supers";
     }
+    
     @PostMapping("/addSighting")
     public String addSighting(Sighting sighting, HttpServletRequest request){
         String superId = request.getParameter("super");
@@ -135,5 +136,6 @@ public class MVCController {
         sightings.save(sighting);
         return "redirect:/sightings";
     }
+
 }
 

@@ -24,7 +24,7 @@
 //
 //    @BeforeAll
 //    public void setUp() {
-//        Location location = new Location(1,38.2550387d,-85.7603587d,"The Software Guild");
+//        Location location = new Location(1,38.2550387d,-85.7603587d,"The Software Guild", "address");
 //        testEntityManager.persist(location);
 //    }
 //    @Test

@@ -51,6 +51,11 @@ public class MVCController {
         locations.save(location);
         return "redirect:/locations";
     }
+    @GetMapping("/deleteLocation")
+    public String deleteLocation(Integer id) {
+        locations.deleteById(id);
+        return "redirect:/locations";
+    }
 
     @GetMapping("/organizations")
     public String displayOrganizations(Model model) {
@@ -64,31 +69,16 @@ public class MVCController {
         orgs.save(organization);
         return "redirect:/organizations";
     }
+    @GetMapping("/deleteOrganization")
+    public String deleteOrganization(Integer id) {
+        orgs.deleteById(id);
+        return "redirect:/organizations";
+    }
     @GetMapping("/powers")
     public String displayPowers(Model model) {
         List<Power> powerList = powers.findAll();
         model.addAttribute("powers", powerList);
         return "powers";
-    }
-    @GetMapping("/supers")
-    public String displaySupers(Model model) {
-        List<Super> superList = supers.findAll();
-        model.addAttribute("supers", superList);
-        List<Power> powerList = powers.findAll();
-        model.addAttribute("powers", powerList);
-        List<Organization> organizationList = orgs.findAll();
-        model.addAttribute("organizations", organizationList);
-        return "supers";
-    }
-    @GetMapping("/sightings")
-    public String displaySightings(Model model) {
-        List<Super> superList = supers.findAll();
-        model.addAttribute("supers", superList);
-        List<Location> locationList = locations.findAll();
-        model.addAttribute("locations", locationList);
-        List<Sighting> sightingList = sightings.findAll();
-        model.addAttribute("sightings", sightingList);
-        return "sightings";
     }
     @PostMapping("/addPowers")
     public String addPower(Power power, HttpServletRequest request) {
@@ -99,6 +89,21 @@ public class MVCController {
         }
         powers.save(power);
         return "redirect:/powers";
+    }
+    @GetMapping("/deletePower")
+    public String deletePower(Integer id) {
+        powers.deleteById(id);
+        return "redirect:/powers";
+    }
+    @GetMapping("/supers")
+    public String displaySupers(Model model) {
+        List<Super> superList = supers.findAll();
+        model.addAttribute("supers", superList);
+        List<Power> powerList = powers.findAll();
+        model.addAttribute("powers", powerList);
+        List<Organization> organizationList = orgs.findAll();
+        model.addAttribute("organizations", organizationList);
+        return "supers";
     }
     @PostMapping("/addSuper")
     public String addSuper(Super super_, HttpServletRequest request) {
@@ -122,7 +127,21 @@ public class MVCController {
         supers.save(super_);
         return "redirect:/supers";
     }
-    
+    @GetMapping("/deleteSuper")
+    public String deleteSuper(Integer id) {
+        supers.deleteById(id);
+        return "redirect:/supers";
+    }
+    @GetMapping("/sightings")
+    public String displaySightings(Model model) {
+        List<Super> superList = supers.findAll();
+        model.addAttribute("supers", superList);
+        List<Location> locationList = locations.findAll();
+        model.addAttribute("locations", locationList);
+        List<Sighting> sightingList = sightings.findAll();
+        model.addAttribute("sightings", sightingList);
+        return "sightings";
+    }
     @PostMapping("/addSighting")
     public String addSighting(Sighting sighting, HttpServletRequest request){
         String superId = request.getParameter("super");
@@ -136,6 +155,14 @@ public class MVCController {
         sightings.save(sighting);
         return "redirect:/sightings";
     }
+
+    @GetMapping("/deleteSighting")
+    public String deleteSighting(Integer id) {
+        sightings.deleteById(id);
+        return "redirect:/sightings";
+    }
+
+
 
 }
 

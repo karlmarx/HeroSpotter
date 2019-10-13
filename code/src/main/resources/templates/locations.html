@@ -92,48 +92,53 @@
     </div>
     <div id="add form">
         <h3>Add New Location</h3>
+
         <form type="form" action="addLocation" method="POST">
+            <div class="col-8">
             <div class="form-group">
                 <label class="col-4" for="name">Location Name</label>
                 <input type="text" class="col-8 form-control" id="name" name="name"/>
             </div>
+
             <div id="locationField" class="form-group">
-                <label class="col-4" for="address">Address</label>
+
                 <input id="autocomplete"
                        name="address"
-                       class="col-8 form-control"
+                       class="col-md-12 form-control"
                        placeholder="Enter the address"
                        onFocus="geolocate()"
                        type="text"/>
-            </div>
+            </div><br>
+
 
             <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="street_number">Address</label>
-                    <input class="field form-control" id="street_number" disabled="true"/>
+                <div class="form-group col-md-3">
+                    <label for="street_number">Street Address</label>
+                    <input class="field form-control" id="street_number" disabled="true" readonly/>
                 </div>
-                <div class="form-group col-md-8">
-                <input class="field form-control" id="route" disabled="true"/>
+                <div class="form-group col-md-9">
+                    <label for="route" style="color:transparent;">. </label>
+                <input class="field form-control" id="route" disabled="true" readonly/>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="locality">City</label>
-                    <input class="field form-control" type="text" id="locality" disabled="true">
+                    <input class="field form-control" type="text" id="locality" disabled="true" readonly/>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="administrative_area_level_1">State</label>
-                    <input class="field form-control" type="text" id="administrative_area_level_1" disabled="true"/>
+                    <input class="field form-control" type="text" id="administrative_area_level_1" disabled="true" readonly/>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="postal_code">Zip</label>
-                    <input class="field form-control" type="text" id="postal_code" disabled="true"/>
+                    <input class="field form-control" type="text" id="postal_code" disabled="true" readonly/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="country">Country</label>
-                <input class="field form-control" type="text" id="country" disabled="true"/>
+                <input class="field form-control" type="text" id="country" disabled="true" readonly/>
             </div>
 
             <input type="hidden" id="placeID" name="placeID" />
@@ -141,7 +146,9 @@
             <input type="hidden" id="longitude" name="longitude" />
 
             <button type="submit" class="btn btn-primary">Add Location</button>
+            </div>
         </form>
+
     </div>
 </main>
 

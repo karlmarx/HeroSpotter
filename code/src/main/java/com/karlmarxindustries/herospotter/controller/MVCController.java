@@ -30,7 +30,7 @@ public class MVCController {
     public String displayLocations(Model model) {
         List<Location> locationList = locations.findAll();
         model.addAttribute("locations", locationList);
-        return "locationsBackup";
+        return "locations";
     }
 
     //    @PostMapping("/addLocation")

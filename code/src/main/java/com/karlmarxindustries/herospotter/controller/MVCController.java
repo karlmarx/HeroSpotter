@@ -51,6 +51,24 @@ public class MVCController {
         locations.save(location);
         return "redirect:/locations";
     }
+    @GetMapping("/editLocation")
+    public String editLocation(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Location location = locations.findById(id).orElse(null);
+        model.addAttribute("location", location);
+        return "editLocation";
+    }
+    @PostMapping("/editLocation")
+    public String editLocationPartTwo(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Location location = locations.findById(id).orElse(null);
+        location.setLongitude(Double.parseDouble(request.getParameter("longitude")));
+        location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
+        location.setName(request.getParameter("name"));
+        location.setAddress(request.getParameter("address"));
+        locations.save(location);
+        return "redirect:/locations";
+    }
     @GetMapping("/deleteLocation")
     public String deleteLocation(Integer id) {
         locations.deleteById(id);
@@ -149,7 +167,7 @@ public class MVCController {
         LocalDate localDate = LocalDate.parse(request.getParameter("date"));
 
         sighting.setDate(localDate);
-        sighting.setSuperPerson(supers.findById(Integer.parseInt(superId)).orElse(null));
+        sighting.setSuperPerson(supers.findById(Integer.parseInt(superId)).orElse(null)); //is this right way to use or else?
         sighting.setLocation(locations.findById(Integer.parseInt(locationId)).orElse(null));
         sighting.setApproved(false);
         sightings.save(sighting);

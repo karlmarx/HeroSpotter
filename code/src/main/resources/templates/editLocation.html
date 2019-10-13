@@ -13,8 +13,58 @@
 <main role="main" class="container">
 
     <div class="container">
-        <h1>Home</h1>
+        <h1>Edit Location</h1>
 
+
+    <div id="edit form">
+        <h3>Edit Location</h3>
+        <div class="row m-4 border border-dark">
+            <div class="col-3 text-center m-3">
+                <span class="h3">Edit Teacher</span>
+            </div>
+            <div class="col-7 text-center m-3">
+                <form action="/editLocation" method="POST">
+                    <div class="form-group row">
+                        <label for="name" class="col-3 col-form-label">
+                            Name</label>
+                        <div class="col-9">
+                            <input type="text" name="name" id="name"
+                                   class="form-control" th:value="${location.name}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="address" class="col-3 col-form-label">
+                            Address</label>
+                        <div class="col-9">
+                            <input type="text" name="address" id="address"
+                                   class="form-control"  th:value="${location.address}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="latitude" class="col-3 col-form-label">
+                            Latitude</label>
+                        <div class="col-9">
+                            <input type="number" name="latitude" id="latitude"
+                                   class="form-control" th:value="${location.latitude}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="longitude" class="col-3 col-form-label">
+                            Long</label>
+                        <div class="col-9">
+                            <input type="number" name="longitude" id="longitude"
+                                   class="form-control" th:value="${location.longitude}">
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" th:value="${location.id}"/>
+                    <button type="submit" class="btn btn-primary">
+                        Update Location</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
 
 
 

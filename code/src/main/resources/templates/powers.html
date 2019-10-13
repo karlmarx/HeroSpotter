@@ -33,8 +33,9 @@
                 <td th:text="${power.description}">Address</td>
                 <td><div th:if="${power.unique} == true"><i class="fas fa-check-square"></i></div><div th:if="${power.unique} == false"><i class="fas fa-times"></i></div></td>
                 <td><i class="fas fa-info-circle"></i></td>
-                <td><i class="fas fa-edit"></i></td>
-                <td><i class="fas fa-minus-square"></i></td>
+                <td><a href="#" th:href="@{editPower(id=${power.id})}"><i class="fas fa-edit"></i></a></td>
+                <td><a href="#" th:href="@{deletePower(id=${power.id})}"><i class="fas fa-minus-square"></i></a></td>
+
             </tr>
 
             </tbody>

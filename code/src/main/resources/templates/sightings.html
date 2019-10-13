@@ -34,8 +34,8 @@
                 <td th:text="${sighting.location.name + ': ' + sighting.location.address}">Address</td>
                 <td th:text="${sighting.reporterName}">Reporter</td>
                 <td><i class="fas fa-info-circle"></i></td>
-                <td><i class="fas fa-edit"></i></td>
-                <td><i class="fas fa-minus-square"></i></td>
+                <td><a href="#" th:href="@{editSighting(id=${sighting.id})}"><i class="fas fa-edit"></i></a></td>
+                <td><a href="#" th:href="@{deleteSighting(id=${sighting.id})}"><i class="fas fa-minus-square"></i></a></td>
             </tr>
 
             </tbody>

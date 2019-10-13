@@ -30,7 +30,7 @@ public class MVCController {
     public String displayLocations(Model model) {
         List<Location> locationList = locations.findAll();
         model.addAttribute("locations", locationList);
-        return "locations";
+        return "locationsBackup";
     }
 
     //    @PostMapping("/addLocation")
@@ -62,8 +62,8 @@ public class MVCController {
     public String editLocationPartTwo(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
         Location location = locations.findById(id).orElse(null);
-        location.setLongitude(Double.parseDouble(request.getParameter("longitude")));
-        location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
+//        location.setLongitude(Double.parseDouble(request.getParameter("longitude")));
+//        location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
         location.setName(request.getParameter("name"));
         location.setAddress(request.getParameter("address"));
         locations.save(location);
@@ -86,6 +86,24 @@ public class MVCController {
     public String addOrganization(Organization organization) {
         orgs.save(organization);
         return "redirect:/organizations";
+    }
+    @GetMapping("/editOrganization")
+    public String editOrganization(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Organization organization = orgs.findById(id).orElse(null);
+        model.addAttribute("organization", organization);
+        return "editOrganization";
+    }
+    @PostMapping("/editOrganization")
+    public String editOrganizationPartTwo(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Location location = locations.findById(id).orElse(null);
+//        location.setLongitude(Double.parseDouble(request.getParameter("longitude")));
+//        location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
+        location.setName(request.getParameter("name"));
+        location.setAddress(request.getParameter("address"));
+        locations.save(location);
+        return "redirect:/locations";
     }
     @GetMapping("/deleteOrganization")
     public String deleteOrganization(Integer id) {

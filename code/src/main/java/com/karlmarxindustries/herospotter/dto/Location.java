@@ -15,10 +15,10 @@ public class Location {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
     int id;
-    @Column(nullable = false)
-    double latitude;
-    @Column(nullable = false)
-    double longitude;
+//    @Column(nullable = false)
+//    double latitude;
+//    @Column(nullable = false)
+//    double longitude;
     @Column
     String name;
     @Column

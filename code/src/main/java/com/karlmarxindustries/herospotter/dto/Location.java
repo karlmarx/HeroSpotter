@@ -23,4 +23,6 @@ public class Location {
     String name;
     @Column
     String address;
+    @Column(name="place_id")
+    String placeId;
 }

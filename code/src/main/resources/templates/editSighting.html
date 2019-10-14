@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--/*/ <th:block th:include="fragments/stylingFragment.html :: head">
+            </th:block> /*/-->
+    <link href="../css/style.css" rel="stylesheet" th:href="@{/css/style.css}"/>
+    <style>
+        .label {
+            text-align: right;
+            font-weight: bold;
+            width: 100px;
+            color: #303030;
+            /*font-family: "Roboto";*/
+        }
+        #address {
+            border: 1px solid #000090;
+            background-color: #f0f9ff;
+            width: 480px;
+            padding-right: 2px;
+        }
+        #address td {
+            font-size: 10pt;
+        }
+        .field {
+            width: 99%;
+        }
+        .slimField {
+            width: 80px;
+        }
+        .wideField {
+            width: 200px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div th:replace="fragments/stylingFragment.html:: navbar"></div>
+
+<main role="main" class="container">
+
+    <div class="container">
+        <h1>Edit Sighting</h1>
+
+
+        <div id="edit form">
+            <h3>Edit Sighting</h3>
+            <div class="row m-4 border border-dark">
+                <div class="col-3 text-center m-3">
+                    <span class="h3">Edit Sighting</span>
+                </div><br>
+                <div class="col-7 text-center m-3">
+                    <form action="/editSuper" method="POST">
+                        <div class="form-group row">
+                            <label for="date" class="col-3 col-form-label">Date</label>
+                            <div class="col-9">
+                                <input class="form-control" type="date" th:value="${sighting.date}" id="date" name="date">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="super" class="col-3 col-form-label">Superperson</label>
+                            <div class="col-9">
+                                <select class="form-control" id="super" name="super">
+                                    <option th:each="super : ${supers}"
+                                            th:value="${super.id}"
+                                            th:text="${super.name}" th:selected="${sighting.superPerson.name}">Superperson</option>
+    <!-- try to default to current or do a toggle edit-->
+                                    <option><a href="/supers">Add New SuperPerson</a></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="location" class="col-3 col-form-label">Location</label>
+                            <div class="col-9">
+                                <select class="form-control" id="location" name="location">
+                                    <option th:each="location : ${locations}"
+                                            th:value="${location.id}"
+                                            th:text="${location.name + '(' + location.address + ')'}" th:selected="${sighting.location.name + '(' + sighting.location.address + ')'}">Location</option>
+                                    <option>Add New Location</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label" for="reporterName">Reporter Name</label>
+                            <div class="col-9">
+                                <input type="name" class="form-control" id="reporterName" name="reporter-name" th:value="${sighting.reporterName}"/>
+                            </div>
+                        </div>
+
+<!--                        try to figure out how to default the select-->
+                        <img src="https://baconmockup.com/640/360">
+                        <div class="custom-control custom-switch form-group row">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+<!--                            figure out way to default this and have it update the value of isApproved-->
+                            <label class="custom-control-label" for="customSwitch1">Approve current image</label>
+                        </div>
+                        <div class="form-group row">
+                            <label for="upload-image" class="col-3 col-form-label">Upload New Image</label>
+                            <input type="file" class="form-control-file col-9" id="upload-image">
+                        </div>
+                        <input type="hidden" name="id" th:value="${sighting.id}"/>
+                        <button type="submit" class="btn btn-primary">
+                            Update Sighting</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+<script>
+    // This sample uses the Autocomplete widget to help the user select a
+    // place, then it retrieves the address components associated with that
+    // place, and then it populates the form fields with those details.
+    // This sample requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script
+    // src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+    var placeSearch, autocomplete;
+
+    var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+    };
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search predictions to
+        // geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'), {types: ['geocode']});
+
+        // Avoid paying for data that you don't need by restricting the set of
+        // place fields that are returned to just the address components.
+        autocomplete.setFields(['address_component']);
+
+        // When the user selects an address from the drop-down, populate the
+        // address fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+    }
+
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+            document.getElementById(component).value = '';
+            document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details,
+        // and then fill-in the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            if (componentForm[addressType]) {
+                var val = place.address_components[i][componentForm[addressType]];
+                document.getElementById(addressType).value = val;
+            }
+        }
+    }
+
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var circle = new google.maps.Circle(
+                    {center: geolocation, radius: position.coords.accuracy});
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB66tFLS3_WbOT1Eln1Pi7LT6dN68L-xSc&libraries=places&callback=initAutocomplete"
+        async defer></script>
+<!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+
+
+<script src="../js/hero.js" th:href="@{/js/hero.js}"></script>
+<div th:replace="fragments/stylingFragment.html :: includes"></div>
+</body>
+</html>

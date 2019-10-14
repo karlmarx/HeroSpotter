@@ -16,10 +16,10 @@ public class Organization {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
      int id;
-    @Column
-     double latitude;
-    @Column
-     double longitude;
+//    @Column
+//     double latitude;
+//    @Column
+//     double longitude;
     @Column(nullable = false)
      String name;
     @Column

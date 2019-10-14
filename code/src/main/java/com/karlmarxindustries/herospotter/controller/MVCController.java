@@ -51,6 +51,7 @@ public class MVCController {
         locations.save(location);
         return "redirect:/locations";
     }
+
     @GetMapping("/editLocation")
     public String editLocation(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -58,6 +59,7 @@ public class MVCController {
         model.addAttribute("location", location);
         return "editLocation";
     }
+
     @PostMapping("/editLocation")
     public String editLocationPartTwo(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -66,9 +68,11 @@ public class MVCController {
 //        location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
         location.setName(request.getParameter("name"));
         location.setAddress(request.getParameter("address"));
+        location.setPlaceId(request.getParameter("placeID"));
         locations.save(location);
         return "redirect:/locations";
     }
+
     @GetMapping("/deleteLocation")
     public String deleteLocation(Integer id) {
         locations.deleteById(id);
@@ -87,6 +91,7 @@ public class MVCController {
         orgs.save(organization);
         return "redirect:/organizations";
     }
+
     @GetMapping("/editOrganization")
     public String editOrganization(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -94,31 +99,36 @@ public class MVCController {
         model.addAttribute("organization", organization);
         return "editOrganization";
     }
+
     @PostMapping("/editOrganization")
     public String editOrganizationPartTwo(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        Location location = locations.findById(id).orElse(null);
-//        location.setLongitude(Double.parseDouble(request.getParameter("longitude")));
-//        location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
-        location.setName(request.getParameter("name"));
-        location.setAddress(request.getParameter("address"));
-        locations.save(location);
-        return "redirect:/locations";
+        Organization organization = orgs.findById(id).orElse(null);
+        organization.setName(request.getParameter("name"));
+        organization.setAddress(request.getParameter("address"));
+        organization.setEmail(request.getParameter("email"));
+        organization.setUrl(request.getParameter("url"));
+        organization.setPhoneNumber(request.getParameter("phoneNumber"));
+        orgs.save(organization);
+        return "redirect:/organizations";
     }
+
     @GetMapping("/deleteOrganization")
     public String deleteOrganization(Integer id) {
         orgs.deleteById(id);
         return "redirect:/organizations";
     }
+
     @GetMapping("/powers")
     public String displayPowers(Model model) {
         List<Power> powerList = powers.findAll();
         model.addAttribute("powers", powerList);
         return "powers";
     }
+
     @PostMapping("/addPowers")
     public String addPower(Power power, HttpServletRequest request) {
-        if (request.getParameter("isUnique")!=null) {
+        if (request.getParameter("isUnique") != null) {
             power.setUnique(true);
         } else {
             power.setUnique(false);
@@ -126,11 +136,36 @@ public class MVCController {
         powers.save(power);
         return "redirect:/powers";
     }
+
+    @GetMapping("/editPowers")
+    public String editPowers(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Power power = powers.findById(id).orElse(null);
+        model.addAttribute("power", power);
+        return "editPowers";
+    }
+
+    @PostMapping("/editPowers")
+    public String editPowersPartTwo(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Power power = powers.findById(id).orElse(null);
+        power.setName(request.getParameter("name"));
+        power.setDescription(request.getParameter("description"));
+        if (request.getParameter("isUnique") != null) {
+            power.setUnique(true);
+        } else {
+            power.setUnique(false);
+        }
+        powers.save(power);
+        return "redirect:/powers";
+    }
+
     @GetMapping("/deletePower")
     public String deletePower(Integer id) {
         powers.deleteById(id);
         return "redirect:/powers";
     }
+
     @GetMapping("/supers")
     public String displaySupers(Model model) {
         List<Super> superList = supers.findAll();
@@ -141,6 +176,7 @@ public class MVCController {
         model.addAttribute("organizations", organizationList);
         return "supers";
     }
+
     @PostMapping("/addSuper")
     public String addSuper(Super super_, HttpServletRequest request) {
         String[] powerIds = request.getParameterValues("powerId");
@@ -155,7 +191,7 @@ public class MVCController {
         }
         super_.setOrganizations(orgList);
         super_.setPowers(powerList);
-        if (request.getParameter("isVillain")!=null) {
+        if (request.getParameter("isVillain") != null) {
             super_.setVillain(true);
         } else {
             super_.setVillain(false);
@@ -163,11 +199,52 @@ public class MVCController {
         supers.save(super_);
         return "redirect:/supers";
     }
+
+    @GetMapping("/editSuper")
+    public String editSuper(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Super super_ = supers.findById(id).orElse(null);
+        model.addAttribute("super", super_);
+        List<Power> powerList = powers.findAll();
+        model.addAttribute("powers", powerList);
+        List<Organization> organizationList = orgs.findAll();
+        model.addAttribute("organizations", organizationList);
+        return "editSuper";
+    }
+
+    @PostMapping("/editSuper")
+    public String editSuperPartTwo(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Super super_ = supers.findById(id).orElse(null);
+        super_.setName(request.getParameter("name"));
+        super_.setDescription(request.getParameter("description"));
+        if (request.getParameter("isVillain") != null) {
+            super_.setVillain(true);
+        } else {
+            super_.setVillain(false);
+        }
+        String[] powerIds = request.getParameterValues("powerId");
+        String[] organizationIds = request.getParameterValues("organizationId");
+        List<Organization> orgList = new ArrayList<>();
+        for (String orgID : organizationIds) {
+            orgList.add(orgs.findById(Integer.parseInt(orgID)).orElse(null));
+        }
+        List<Power> powerList = new ArrayList<>();
+        for (String powerId : powerIds) {
+            powerList.add(powers.findById(Integer.parseInt(powerId)).orElse(null));
+        }
+        super_.setOrganizations(orgList);
+        super_.setPowers(powerList);
+        supers.save(super_);
+        return "redirect:/supers";
+    }
+
     @GetMapping("/deleteSuper")
     public String deleteSuper(Integer id) {
         supers.deleteById(id);
         return "redirect:/supers";
     }
+
     @GetMapping("/sightings")
     public String displaySightings(Model model) {
         List<Super> superList = supers.findAll();
@@ -178,16 +255,41 @@ public class MVCController {
         model.addAttribute("sightings", sightingList);
         return "sightings";
     }
+
     @PostMapping("/addSighting")
-    public String addSighting(Sighting sighting, HttpServletRequest request){
+    public String addSighting(Sighting sighting, HttpServletRequest request) {
         String superId = request.getParameter("super");
         String locationId = request.getParameter("location");
         LocalDate localDate = LocalDate.parse(request.getParameter("date"));
-
         sighting.setDate(localDate);
         sighting.setSuperPerson(supers.findById(Integer.parseInt(superId)).orElse(null)); //is this right way to use or else?
         sighting.setLocation(locations.findById(Integer.parseInt(locationId)).orElse(null));
         sighting.setApproved(false);
+        sightings.save(sighting);
+        return "redirect:/sightings";
+    }
+    @GetMapping("/editSighting")
+    public String editSighting(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Sighting sighting = sightings.findById(id).orElse(null);
+        model.addAttribute("sighting", sighting);
+        List<Super> superList = supers.findAll();
+        model.addAttribute("supers", superList);
+        List<Location> locationList = locations.findAll();
+        model.addAttribute("locations", locationList);
+        return "editSighting";
+    }
+
+    @PostMapping("/editSighting")
+    public String editSightingPartTwo(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Sighting sighting = sightings.findById(id).orElse(null);
+        sighting.setDate(LocalDate.parse(request.getParameter("date")));
+        String superId = request.getParameter("super");
+        String locationId = request.getParameter("location");
+        sighting.setSuperPerson(supers.findById(Integer.parseInt(superId)).orElse(null)); //is this right way to use or else?
+        sighting.setLocation(locations.findById(Integer.parseInt(locationId)).orElse(null));
+        sighting.setApproved(Boolean.parseBoolean(request.getParameter("approved")));
         sightings.save(sighting);
         return "redirect:/sightings";
     }
@@ -197,7 +299,6 @@ public class MVCController {
         sightings.deleteById(id);
         return "redirect:/sightings";
     }
-
 
 
 }

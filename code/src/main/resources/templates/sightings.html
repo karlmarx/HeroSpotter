@@ -41,8 +41,10 @@
             </tbody>
             <tfoot>
             <tr>
-                <th>Name</th>
-                <th>Address</th>
+                <th>Date</th>
+                <th>Superperson</th>
+                <th>Location</th>
+                <th>Reporter</th>
                 <th>Details</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -66,7 +68,7 @@
                 <select class="form-control" id="super" name="super">
                     <option th:each="super : ${supers}"
                                    th:value="${super.id}"
-                                   th:text="${super.name}">Superperson</option>
+                                   th:text="${super.name}" >Superperson</option>
                     <option>Add New SuperPerson</option>
                 </select>
             </div>

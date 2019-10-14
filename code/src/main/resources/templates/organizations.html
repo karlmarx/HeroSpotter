@@ -5,6 +5,41 @@
     <!--/*/ <th:block th:include="fragments/stylingFragment.html :: head">
             </th:block> /*/-->
     <link href="../css/style.css" rel="stylesheet" th:href="@{/css/style.css}"/>
+    <style>
+        #locationField, #controls {
+            position: relative;
+            width: 480px;
+        }
+        #autocomplete {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 99%;
+        }
+        .label {
+            text-align: right;
+            font-weight: bold;
+            width: 100px;
+            color: #303030;
+            /*font-family: "Roboto";*/
+        }
+        #address {
+            border: 1px solid #000090;
+            background-color: #f0f9ff;
+            width: 480px;
+            padding-right: 2px;
+        }
+        #address td {
+            font-size: 10pt;
+        }
+        .field {
+            width: 99%;
+        }
+        #locationField {
+            height: 20px;
+            margin-bottom: 2px;
+        }
+    </style>
 </head>
 
 <body>
@@ -20,7 +55,6 @@
             <tr>
                 <th>Name</th>
                 <th>Address</th>
-
                 <th>Phone</th>
                 <th>Details</th>
                 <th>Edit</th>
@@ -61,17 +95,45 @@
                 <label class="col-4" for="name">Organization Name</label>
                 <input type="text" class="col-8 form-control" id="name" name="name"/>
             </div>
-            <div class="form-group">
-                <label class="col-4" for="address">Address</label>
-                <input type="text" class="col-8 form-control" id="address" name="address"/>
+            <div id="locationField" class="form-group row">
+                <label for="autocomplete" class="col-3 col-form-label">Address:</label>
+                <div class="col-9">
+                    <input id="autocomplete"
+                           name="address"
+                           class=" form-control"
+                           placeholder="Enter the address"
+                           onFocus="geolocate()"
+                           type="text"  />
+                </div>
+            </div>
+            <br>
+            <div class="form row">
+                <div class="form-group col-md-3">
+                    <label for="street_number">Number</label>
+                    <input class="field form-control" id="street_number" disabled="true" readonly/>
+                </div>
+                <div class="form-group col-md-9">
+                    <label for="route">Street</label>
+                    <input class="field form-control" id="route" disabled="true" readonly/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="locality">City</label>
+                    <input class="field form-control" type="text" id="locality" disabled="true" readonly/>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="administrative_area_level_1">State</label>
+                    <input class="field form-control" type="text" id="administrative_area_level_1" disabled="true" readonly/>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="postal_code">Zip</label>
+                    <input class="field form-control" type="text" id="postal_code" disabled="true" readonly/>
+                </div>
             </div>
             <div class="form-group">
-                <label class="col-4" for="latitude">Latitude</label>
-                <input type="number" class="col-8 form-control" id="latitude" name="latitude"/>
-            </div>
-            <div class="form-group">
-                <label class="col-4" for="longitude">Longitude</label>
-                <input type="number" class="col-8 form-control" id="longitude" name="longitude"/>
+                <label for="country">Country</label>
+                <input class="field form-control" type="text" id="country" disabled="true" readonly/>
             </div>
             <div class="form-group">
                 <label class="col-4" for="email">Email</label>
@@ -83,7 +145,7 @@
             </div>
             <div class="form-group">
                 <label class="col-4" for="phoneNumber">Phone Number</label>
-                <input type="text" class="col-8 form-control" id="phoneNumber" name="phoneNumber"/>
+                <input type="tel" class="col-8 form-control" id="phoneNumber" name="phoneNumber"/>
             </div>
             <div class="form-group">
                 <label class="col-4" for="description">Description</label>
@@ -98,7 +160,79 @@
 
 
 
+<script>
+    // This sample uses the Autocomplete widget to help the user select a
+    // place, then it retrieves the address components associated with that
+    // place, and then it populates the form fields with those details.
+    // This sample requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script
+    // src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
+    var placeSearch, autocomplete;
+
+    var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+    };
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search predictions to
+        // geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'), {types: ['geocode']});
+
+        // Avoid paying for data that you don't need by restricting the set of
+        // place fields that are returned to just the address components.
+        autocomplete.setFields(['address_component']);
+
+        // When the user selects an address from the drop-down, populate the
+        // address fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+    }
+
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+            document.getElementById(component).value = '';
+            document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details,
+        // and then fill-in the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            if (componentForm[addressType]) {
+                var val = place.address_components[i][componentForm[addressType]];
+                document.getElementById(addressType).value = val;
+            }
+        }
+    }
+
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var circle = new google.maps.Circle(
+                    {center: geolocation, radius: position.coords.accuracy});
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB66tFLS3_WbOT1Eln1Pi7LT6dN68L-xSc&libraries=places&callback=initAutocomplete"
+        async defer></script>
 
 <!-- /.container -->
 

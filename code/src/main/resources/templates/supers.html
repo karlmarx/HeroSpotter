@@ -23,6 +23,7 @@
 
                 <th>Power(s)</th>
                 <th>Description</th>
+                <th>Details</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -48,6 +49,7 @@
 
                 <th>Power(s)</th>
                 <th>Description</th>
+                <th>Details</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -98,9 +100,12 @@
                 <label class="custom-control-label" for="isVillain" >Check if Villain</label>
 
             </div>
-            <div class="form-group">
-                <label class="col-4" for="description">Description</label>
-                <input type="text" class="col-8 form-control" id="description" name="description"/>
+            <div class="form-group row">
+                <label for="description" class="col-3 col-form-label">
+                    Description</label>
+                <div class="col-9">
+                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Add Super</button>
         </form>

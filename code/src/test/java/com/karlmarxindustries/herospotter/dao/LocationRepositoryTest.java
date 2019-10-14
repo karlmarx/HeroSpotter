@@ -23,12 +23,51 @@ public class LocationRepositoryTest {
     @BeforeEach
     public  void setUp() {
         locationRepo.deleteAll();
-        Location location = new Location(1,"The Software Guild", "address", "");
-        locationRepo.save(location);
     }
     @Test
-    public void testGetOne() {
-        List<Location> shouldHaveOne =  locationRepo.findAll();
+    public void testSaveOneGetAll() {
+        Location location = new Location(1, "The Software Guild", "address", "");
+        locationRepo.save(location);
+        List<Location> shouldHaveOne = locationRepo.findAll();
         Assertions.assertEquals(1, shouldHaveOne.size());
+    }
+    @Test
+    public void testSaveManyGetAll() {
+        Location location = new Location(1, "The Software Guild", "address", "asdf");
+        Location location2 = new Location(2, "Karl MArx, Industries", "123 e main st ", "asdf");
+        Location location3 = new Location(3, "The Software Guild", "address", "asdfasdfadfadsfasdfdsfaf");
+        locationRepo.save(location);
+        locationRepo.save(location2);
+        locationRepo.save(location3);
+        List<Location> shouldHaveThree = locationRepo.findAll();
+        Assertions.assertEquals(1, shouldHaveThree.size());
+    }
+    @Test
+    public void testFindByID() {
+        Location location = new Location(1, "The Software Guild", "address", "asdf");
+        Location location2 = new Location(2, "Karl MArx, Industries", "123 e main st ", "asdf");
+        Location location3 = new Location(3, "The Software Guild", "address", "asdfasdfadfadsfasdfdsfaf");
+        locationRepo.save(location);
+        locationRepo.save(location2);
+        locationRepo.save(location3);
+        Location shouldBeLocation = locationRepo.findById(1).orElse(null);
+        Location shouldBeLocation2 = locationRepo.findById(2).orElse(null);
+        Location shouldBeLocation3 = locationRepo.findById(3).orElse(null);
+        Assertions.assertEquals(location, shouldBeLocation);
+        Assertions.assertEquals(location2, shouldBeLocation2);
+        Assertions.assertEquals(location3, shouldBeLocation3);
+    }
+    public void testSavedUpdatesObject() {
+        Location location = new Location(1, "The Software Guild", "address", "asdf");
+        locationRepo.save(location);
+        Location shouldBe1 = locationRepo.findById(1).orElse(null);
+        Assertions.assertEquals(location, shouldBe1);
+        shouldBe1.setName("blech");
+        locationRepo.save(shouldBe1);
+        Location shouldBe1Modified = locationRepo.findById(1).orElse(null);
+        long objectCount = locationRepo.count();
+        Assertions.assertEquals(shouldBe1Modified, shouldBe1);
+        Assertions.assertNotEquals(shouldBe1Modified, location);
+        Assertions.assertEquals(1, objectCount);
     }
 }

@@ -151,8 +151,7 @@
                 <label class="col-4" for="description">Description</label>
                 <input type="text" class="col-8 form-control" id="description" name="description"/>
             </div>
-            <input id="placeID" name="placeID" />
-            <button type="submit" class="btn btn-primary">Add Organization</button>
+            <input id="placeID" name="placeID" type="hidden"/>
         </form>
     </div>
 </main>
@@ -170,7 +169,7 @@
     // <script
     // src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-    var placeSearch, autocomplete;
+    var placeSearch, autocomplete, place;
 
     var componentForm = {
         street_number: 'short_name',
@@ -189,7 +188,7 @@
 
         // Avoid paying for data that you don't need by restricting the set of
         // place fields that are returned to just the address components.
-        autocomplete.setFields(['address_component, place_id']);
+        autocomplete.setFields(['address_component', 'place_id']);
 
         // When the user selects an address from the drop-down, populate the
         // address fields in the form.
@@ -198,9 +197,10 @@
 
     function fillInAddress() {
         // Get the place details from the autocomplete object.
-        var place = autocomplete.getPlace();
-        var placeIdString = place.place_id;
-        document.getElementById("placeID").value = placeIdString;
+         place = autocomplete.getPlace();
+        document.getElementById('placeID').value = place.place_id;
+
+
         for (var component in componentForm) {
             document.getElementById(component).value = '';
             document.getElementById(component).disabled = false;
@@ -208,14 +208,15 @@
 
         // Get each component of the address from the place details,
         // and then fill-in the corresponding field on the form.
-        for (var i = 0; i < (place.address_components.length); i++) {
+        for (var i = 0; i < place.address_components.length; i++) {
             var addressType = place.address_components[i].types[0];
             if (componentForm[addressType]) {
                 var val = place.address_components[i][componentForm[addressType]];
                 document.getElementById(addressType).value = val;
-
             }
         }
+        // var pulace = place.placeID.id;
+        // document.getElementById("place_id").value = pulace;
     }
 
     // Bias the autocomplete object to the user's geographical location,

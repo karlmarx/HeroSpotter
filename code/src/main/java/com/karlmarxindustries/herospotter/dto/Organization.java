@@ -34,4 +34,6 @@ public class Organization {
      List<Super> superMembers;
     @Column
     String address;
+    @Column(name="place_id")
+    String placeId;
 }

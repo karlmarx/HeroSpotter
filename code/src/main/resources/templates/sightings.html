@@ -54,47 +54,120 @@
 
 
     </div>
-    <div id="add form">
-        <h3>Report a Sighting</h3>
-        <form type="form" action="addSighting" method="POST">
-            <div class="form-group row">
-                <label for="date" class="col-2 col-form-label">Date</label>
-                <div class="col-8">
-                    <input class="form-control" type="date" value="2011-08-19" id="date" name="date">
+
+
+
+<!--    <div id="add form">-->
+<!--        <h3>Report a Sighting</h3>-->
+<!--        <form type="form" action="addSighting" method="POST">-->
+<!--            <div class="form-group row">-->
+<!--                <label for="date" class="col-2 col-form-label">Date</label>-->
+<!--                <div class="col-8">-->
+<!--                    <input class="form-control" type="date" value="2011-08-19" id="date" name="date">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="super">Superperson</label>-->
+<!--                <select class="form-control" id="super" name="super">-->
+<!--                    <option th:each="super : ${supers}"-->
+<!--                                   th:value="${super.id}"-->
+<!--                                   th:text="${super.name}" >Superperson</option>-->
+<!--                    <option>Add New SuperPerson</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="location">Location</label>-->
+<!--                <select class="form-control" id="location" name="location">-->
+<!--                    <option th:each="location : ${locations}"-->
+<!--                            th:value="${location.id}"-->
+<!--                            th:text="${location.name + '(' + location.address + ')'}">Location</option>-->
+<!--                    <option>Add New Location</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="col-4" for="reporterName">Your Name</label>-->
+<!--                <div class="col-10">-->
+<!--                <input type="name" class="col-8 form-control" id="reporterName" name="reporter-name"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                    <label for="upload-image">Upload Image</label>-->
+<!--                    <input type="file" class="form-control-file" id="upload-image">-->
+<!--                </div>-->
+<!--            <button type="submit" class="btn btn-primary">Add Sighting</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+
+
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addSighting">Add Sighting</button>
+        <!-- Modal -->
+        <div id="addSighting" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h3 class="modal-title">Report a Sighting</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="add form">
+
+                            <form type="form" class="col-9" action="addSighting" method="POST">
+                                <div class="form-group ">
+                                    <label for="date" class="col-form-label">Date</label>
+                                    <div class="">
+                                        <input class="form-control" type="date" value="2011-08-19" id="date" name="date">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="super" class="col-form-label">Superperson</label>
+                                    <select class="form-control" id="super" name="super">
+                                        <option th:each="super : ${supers}"
+                                                th:value="${super.id}"
+                                                th:text="${super.name}" >Superperson</option>
+                                        <option>Add New SuperPerson</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="location" class="col-form-label">Location</label>
+                                    <select class="form-control" id="location" name="location">
+                                        <option th:each="location : ${locations}"
+                                                th:value="${location.id}"
+                                                th:text="${location.name + '(' + location.address + ')'}">Location</option>
+                                        <option>Add New Location</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reporterName" class="col-form-label">Your Name</label>
+                                    <div class="">
+                                        <input type="name" class="form-control" id="reporterName" name="reporter-name"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="upload-image" class="col-form-label">Upload Image</label>
+                                    <input type="file" class="form-control-file" id="upload-image">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Add Sighting</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+
+                    </div>
+
                 </div>
+
             </div>
-            <div class="form-group">
-                <label for="super">Superperson</label>
-                <select class="form-control" id="super" name="super">
-                    <option th:each="super : ${supers}"
-                                   th:value="${super.id}"
-                                   th:text="${super.name}" >Superperson</option>
-                    <option>Add New SuperPerson</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="location">Location</label>
-                <select class="form-control" id="location" name="location">
-                    <option th:each="location : ${locations}"
-                            th:value="${location.id}"
-                            th:text="${location.name + '(' + location.address + ')'}">Location</option>
-                    <option>Add New Location</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="col-4" for="reporterName">Your Name</label>
-                <div class="col-10">
-                <input type="name" class="col-8 form-control" id="reporterName" name="reporter-name"/>
-                </div>
-            </div>
-            <div class="form-group">
-                    <label for="upload-image">Upload Image</label>
-                    <input type="file" class="form-control-file" id="upload-image">
-                </div>
-            <button type="submit" class="btn btn-primary">Add Sighting</button>
-        </form>
-    </div>
-</main>
+        </div>
 
 
 
@@ -109,8 +182,8 @@
 <!-- Placed at the end of the document so the pages load faster -->
 
 
-
-<script src="../js/hero.js" th:href="@{/js/hero.js}"></script>
 <div th:replace="fragments/stylingFragment.html :: includes"></div>
+<script src="../js/hero.js" th:href="@{/js/hero.js}"></script>
+
 </body>
 </html>

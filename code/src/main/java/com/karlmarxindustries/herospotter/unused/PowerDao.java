@@ -1,4 +1,4 @@
-package com.karlmarxindustries.herospotter.dao;
+package com.karlmarxindustries.herospotter.unused;
 
 import com.karlmarxindustries.herospotter.dto.Power;
 import com.karlmarxindustries.herospotter.dto.Super;

@@ -29,3 +29,5 @@ build/
 
 ### VS Code ###
 .vscode/
+### These templates include my google maps API key so they have to be hidden ####
+/src/main/resources/templates/

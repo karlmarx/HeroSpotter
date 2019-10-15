@@ -47,7 +47,8 @@ public class MVCController {
 //
 //    }
     @PostMapping("/addLocation")
-    public String addLocation(Location location) {
+    public String addLocation(Location location, HttpServletRequest request) {
+        location.setPlaceId(request.getParameter("placeID"));
         locations.save(location);
         return "redirect:/locations";
     }
@@ -87,7 +88,8 @@ public class MVCController {
     }
 
     @PostMapping("/addOrganization")
-    public String addOrganization(Organization organization) {
+    public String addOrganization(Organization organization, HttpServletRequest request) {
+        organization.setPlaceId(request.getParameter("placeID"));
         orgs.save(organization);
         return "redirect:/organizations";
     }
@@ -109,6 +111,7 @@ public class MVCController {
         organization.setEmail(request.getParameter("email"));
         organization.setUrl(request.getParameter("url"));
         organization.setPhoneNumber(request.getParameter("phoneNumber"));
+        organization.setPlaceId(request.getParameter("placeID"));
         orgs.save(organization);
         return "redirect:/organizations";
     }

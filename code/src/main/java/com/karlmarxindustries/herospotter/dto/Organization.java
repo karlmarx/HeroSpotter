@@ -36,4 +36,14 @@ public class Organization {
     String address;
     @Column(name="place_id")
     String placeId;
+
+    public Organization(String name, String email, String url, String phoneNumber, String description, String address, String placeId) {
+        this.name = name;
+        this.email = email;
+        this.url = url;
+        this.phoneNumber = phoneNumber;
+        this.description = description;
+        this.address = address;
+        this.placeId = placeId;
+    }
 }

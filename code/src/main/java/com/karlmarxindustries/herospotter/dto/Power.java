@@ -23,4 +23,10 @@ public class Power {
     boolean isUnique;
     @ManyToMany(mappedBy="powers")
     private List<Super> superMembers;
+
+    public Power(String name, String description, boolean isUnique) {
+        this.name = name;
+        this.description = description;
+        this.isUnique = isUnique;
+    }
 }

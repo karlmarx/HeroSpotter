@@ -34,4 +34,12 @@ public class Sighting {
     @Column(name="reporter_name")
     String reporterName;
 
+    public Sighting(LocalDate date, Super superPerson, Location location, boolean isApproved, String reporterName) {
+        this.date = date;
+        this.superPerson = superPerson;
+        this.location = location;
+
+        this.isApproved = isApproved;
+        this.reporterName = reporterName;
+    }
 }

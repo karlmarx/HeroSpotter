@@ -31,4 +31,10 @@ public class Super  {
             joinColumns = {@JoinColumn(name="super_id")},
             inverseJoinColumns = {@JoinColumn(name="org_id")})
     List<Organization> organizations;
+
+    public Super(String name, String description, boolean isVillain) {
+        this.name = name;
+        this.description = description;
+        this.isVillain = isVillain;
+    }
 }

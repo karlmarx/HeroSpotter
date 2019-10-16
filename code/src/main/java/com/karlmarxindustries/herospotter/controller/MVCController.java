@@ -2,6 +2,7 @@ package com.karlmarxindustries.herospotter.controller;
 
 import com.karlmarxindustries.herospotter.dao.*;
 import com.karlmarxindustries.herospotter.dto.*;
+import com.karlmarxindustries.herospotter.service.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,9 @@ public class MVCController {
     LocationRepository locations;
     @Autowired
     OrganizationRepository orgs;
+    @Autowired
+    ServiceImpl service;
+
 
     @GetMapping("/locations")
     public String displayLocations(Model model) {
@@ -46,7 +50,8 @@ public class MVCController {
     @PostMapping("/addLocation")
     public String addLocation(Location location, HttpServletRequest request) {
         location.setPlaceId(request.getParameter("placeID"));
-        locations.save(location);
+        Location filledInLocation = service.fillEmptyLocationFields(location);
+        locations.save(filledInLocation);
         return "redirect:/locations";
     }
 
@@ -67,7 +72,8 @@ public class MVCController {
         location.setName(request.getParameter("name"));
         location.setAddress(request.getParameter("address"));
         location.setPlaceId(request.getParameter("placeID"));
-        locations.save(location);
+        Location filledInLocation = service.fillEmptyLocationFields(location);
+        locations.save(filledInLocation);
         return "redirect:/locations";
     }
 
@@ -98,7 +104,8 @@ public class MVCController {
     @PostMapping("/addOrganization")
     public String addOrganization(Organization organization, HttpServletRequest request) {
         organization.setPlaceId(request.getParameter("placeID"));
-        orgs.save(organization);
+        Organization filledInOrg = service.fillEmptyOrgFields(organization);
+        orgs.save(filledInOrg);
         return "redirect:/organizations";
     }
 
@@ -120,7 +127,8 @@ public class MVCController {
         organization.setUrl(request.getParameter("url"));
         organization.setPhoneNumber(request.getParameter("phoneNumber"));
         organization.setPlaceId(request.getParameter("placeID"));
-        orgs.save(organization);
+        Organization filledInOrg = service.fillEmptyOrgFields(organization);
+        orgs.save(filledInOrg);
         return "redirect:/organizations";
     }
 

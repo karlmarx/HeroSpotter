@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:fragment="head">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,7 +11,12 @@
             integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+
     <link href="../css/style.css" rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Basic|Press+Start+2P|Quantico|Rubik+Mono+One|Teko&display=swap" rel="stylesheet">
+
+
     <title>HeroSpotter</title>
 
     <!-- Bootstrap core CSS -->
@@ -19,7 +24,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
-<body>
+<div>
 
 <div th:fragment="navbar">
 
@@ -77,6 +82,11 @@
 </div>
 
 <div th:fragment="includes">
+    <div id="powerModalHolder"></div>
+    <div id="superModalHolder"></div>
+    <div id="sightingModalHolder"></div>
+    <div id="locationModalHolder"></div>
+    <div id="organizationModalHolder"></div>
     <!-- Bootstrap Dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -92,6 +102,216 @@
             async defer></script>
     <script src="../js/hero.js" th:href="@{/js/hero.js}"></script>
 </div>
+
+<div id="powerModal" class="modal fade" role="dialog"  th:fragment="modalContents">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title" th:text="${power.name}">Power Name</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div th:text="${power.description}" ></div>
+            </div><br>
+                <div>
+                    <h4  th:if="${power.unique} == true" style="text-align: center;"><i class="fas fa-fingerprint"></i> Unique Power <i class="fas fa-fingerprint"></i></h4><h4 th:if="${power.unique} == false"  style="text-align: center;"><i class="far fa-clone"></i> Not Unique <i class="far fa-clone"></i></h4>
+                </div><br>
+
+                <!-- maybe addd who it is unique to -->
+
+                <div></div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+<div id="sightingModal" class="modal fade" role="dialog"  th:fragment="sightingModalContents">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title">Sighting #<span th:text="${sighting.id}"></span></h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+<div class="row">
+<div class="text-center col d-flex justify-content-center m-3">
+    <img src="https://www.fillmurray.com/640/640" width="400" class="img-fluid img-thumbnail" alt="Responsive image">
+</div></div>
+      <div class="row">
+          <div class="col-md-6 mb-4">
+                <div class="card text-white bg-primary mb-3 m-3 card-cascade narrower">
+                    <div class="view view-cascade gradient-card-header peach-gradient">
+                        <h5 class="mb-0">Superhero</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${super.name}">Primary card title</h5>
+                        <p class="card-text" th:text="${super.description}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+          </div>
+          <div class="col-md-6 mb-4">
+         <!-- <div class="col d-flex justify-content-center"> -->
+                <div class="card text-white bg-secondary mb-3 m-3 card-cascade narrower" >
+                    <div class="view view-cascade gradient-card-header blue-gradient">
+                        <h5 class="mb-0">Location</h5>
+                    </div>
+                    <div class="card-body card-body-cascade text-center">
+                        <div id="map-container-google-8" class="z-depth-1-half map-container-5" style="height: 300px">
+                            <iframe src="https://maps.google.com/maps?q=Barcelona&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                    frameborder="0" style="border:0" allowfullscreen></iframe>
+                        </div>
+                        <h5 class="card-title" th:text="${location.name}">Secondary card title</h5>
+                        <p class="card-text" th:text="${location.address}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+          </div>
+      </div>
+
+                <h4 class="text-center">Date of sighting: <span class="badge badge-secondary" th:text="${sighting.date}">New</span></h4>
+                <h4 class="text-center">Reporter: <span class="badge badge-secondary" th:text="${sighting.reporterName}">New</span></h4>
+
+
+            <!-- maybe addd who it is unique to -->
+
+            <div></div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div></div>
+
+
+    <div id="locationModal" class="modal fade" role="dialog"  th:fragment="locationModalContents">
+        <div class="modal-dialog modal-lg ">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h1 class="modal-title"><span th:text="${location.name}">Location Name</span></h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4 d-flex align-items-stretch flex-column">
+                        <!-- <div class="col d-flex justify-content-center"> -->
+                        <div class="card text-white bg-secondary mb-3 m-3 card-cascade narrower" >
+                            <div class="view view-cascade ">
+                                <h5 class="mb-0">Location</h5>
+                            </div>
+                            <div class="card-body card-body-cascade text-center">
+                                <div id="map-container-google-8" class="z-depth-1-half map-container-5" style="height: 300px">
+                                    <iframe src="https://maps.google.com/maps?q=Barcelona&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                            frameborder="0" style="border:0" allowfullscreen></iframe>
+                                </div>
+
+                                <p class="card-text" th:text="${location.address}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <h4 class="text-center">Address: <span class="badge badge-secondary" th:text="${location.address}">New</span></h4>
+
+
+                    <!-- maybe addd who it is unique to -->
+
+                    <div></div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div></div>
+
+<div id="organizationModal" class="modal fade" role="dialog"  th:fragment="organizationModalContents">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title"><span th:text="${organization.name}">Organization Name</span></h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-4 d-flex align-items-stretch flex-column">
+                    <!-- <div class="col d-flex justify-content-center"> -->
+                    <div class="card text-white bg-secondary mb-3 m-3 card-cascade narrower" >
+                        <div class="view view-cascade ">
+                            <h5 class="mb-0">Map</h5>
+                        </div>
+                        <div class="card-body card-body-cascade text-center">
+                            <div id="map-container-google-8" class="z-depth-1-half map-container-5" style="height: 300px">
+                                <iframe src="https://maps.google.com/maps?q=Barcelona&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                        frameborder="0" style="border:0" allowfullscreen></iframe>
+                            </div>
+
+                            <div class="card-text" th:text="${organization.address}">Some quick example text to build on the card title and make up the bulk of the card's content.</div>
+                        </div>
+                    </div>
+                    <h4 class="text-center">Email <span class="badge badge-secondary" th:text="${organization.email}">New</span></h4>
+                    <a  style="text-decoration: none;" href="#" th:href="${organization.url}" ><h4 class="text-center">Website <span class="badge badge-secondary" th:text="${organization.url}">New</span></h4></a>
+                    <h4 class="text-center">Phone <span class="badge badge-secondary" th:text="${organization.phoneNumber}">New</span></h4>
+                    <div class="list-group">
+
+                        <div class="list-group-item list-group-item-heading active d-flex justify-content-between align-items-center">
+                            <h3>Members </h3>
+                            <h4><span class="badge badge-light badge-pill" th:text="${superNum}"></span></h4>
+                        </div>
+                        <div th:each="superhuman:${supers}">
+                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" data-dismiss="modal" th:onclick="'javascript:openSuperModal(\'' + ${superhuman.id} + '\');'">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" th:text="${superhuman.name}">First List Group Item Heading</h5>
+                                    <small th:if="${superhuman.villain} == true">SuperVillain</small><small th:if="${superhuman.villain} == false">SuperHero</small>
+                                </div>
+                                <p  th:text="${superhuman.description}">List Group Item Text</p>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- ADD IN LIST OF MEMBERS -->
+
+            <div></div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</div></div>
 
 <div th:fragment="googleAuto">
     <script>
@@ -169,6 +389,85 @@
             async defer></script>
 
 </div>
+
+
+
+<div id="superModal" class="modal fade" role="dialog"  th:fragment="superModalContents">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header" >
+                <h1 class="modal-title" th:text="${super.name}" >Super Name</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" >&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div th:text="${super.description}" >Description</div>
+                    <hr/>
+
+
+                <div class="list-group">
+
+                    <div class="list-group-item list-group-item-heading active d-flex justify-content-between align-items-center">
+                        <h3>Powers </h3>
+                        <h4><span class="badge badge-light badge-pill" th:text="${powerNum}"></span></h4>
+                    </div>
+                    <div th:each="power:${powers}">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" data-dismiss="modal" th:onclick="'javascript:openPowerModal(\'' + ${power.id} + '\');'">
+                        <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" th:text="${power.name}">First List Group Item Heading</h5>
+                            <small th:if="${power.unique} == true">Unique</small><small th:if="${power.unique} == false">Not Unique</small>
+                        </div>
+                        <p  th:text="${power.description}">List Group Item Text</p>
+
+                    </a>
+                    </div>
+                </div>
+                <hr/>
+
+                <div class="list-group">
+                    <div class="list-group-item list-group-item-heading active d-flex justify-content-between align-items-center">
+                        <h3>Organizations </h3>
+                        <h4><span class="badge badge-light badge-pill" th:text="${orgNum}"></span></h4>
+                    </div>
+                    <div  th:each="org:${orgs}">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+                        <div class="d-flex w-100 justify-content-between">
+                             <h5 class="mb-1"  th:text="${org.name}">First List Group Item Heading</h5>
+                            <small th:text="${org.phoneNumber}"></small>
+                        </div>
+                        <p th:text="${org.description}">List Group Item Text</p>
+                        <small class="text-muted" th:text="${org.address}"></small>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4  th:if="${super.villain} == true" style="text-align: center;"><i class="fas fa-book-dead"></i> Supervillain <i class="fas fa-book-dead"></i></h4><h4 th:if="${super.villain} == false"  style="text-align: center;"><i class="fas fa-meteor"></i> Superhero <i class="fas fa-meteor"></i></h4>
+            </div>
+
+                <!-- maybe addd who it is unique to -->
+
+                <div></div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+
+
 
 
 

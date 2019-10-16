@@ -35,7 +35,7 @@
                 <td><span th:each="organization:${super.organizations}"><span th:text="${organization.name}"/><br></span></td>
                 <td><span th:each="power:${super.powers}"><span th:text="${power.name}"/><br></span></td>
                 <td th:text="${super.description}">Description</td>
-                <td><i class="fas fa-info-circle"></i></td>
+                <td><a href="#" th:onclick="'javascript:openSuperModal(\'' + ${super.id} + '\');'"><i class="fas fa-info-circle"></i></a></td>
                 <td><a href="#" th:href="@{editSuper(id=${super.id})}"><i class="fas fa-edit"></i></a></td>
                 <td><a href="#" th:href="@{deleteSuper(id=${super.id})}"><i class="fas fa-minus-square"></i></a></td>
 
@@ -148,8 +148,6 @@
 
     </div>
 </div>
-
-
 
 
 <!-- /.container -->

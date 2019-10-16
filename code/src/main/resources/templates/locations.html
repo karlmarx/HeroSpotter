@@ -30,7 +30,7 @@
             <tr th:each="location:${locations}">
                 <td th:text="${location.name}">Name</td>
                 <td th:text="${location.address}">Address</td>
-                <td><i class="fas fa-info-circle"></i></td>
+                <td><a href="#" th:onclick="'javascript:openLocationModal(\'' + ${location.id} + '\');'"><i class="fas fa-info-circle"></i></a></td>
                 <td><a href="#" th:href="@{editLocation(id=${location.id})}"><i class="fas fa-edit"></i></a></td>
 
                 <td><a href="#" th:href="@{deleteLocation(id=${location.id})}"><i class="fas fa-minus-square"></i></a></td>

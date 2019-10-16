@@ -66,7 +66,7 @@
                 <td th:text="${organization.name}">Name</td>
                 <td th:text="${organization.address}">Address</td>
                 <td th:text="${organization.phoneNumber}">Address</td>
-                <td><i class="fas fa-info-circle"></i></td>
+                <td><a href="#" th:onclick="'javascript:openOrganizationModal(\'' + ${organization.id} + '\');'"><i class="fas fa-info-circle"></i></a></td>
                 <td><a href="#" th:href="@{editOrganization(id=${organization.id})}"><i class="fas fa-edit"></i></a></td>
                 <td><a href="#" th:href="@{deleteOrganization(id=${organization.id})}"><i class="fas fa-minus-square"></i></a></td>
             </tr>

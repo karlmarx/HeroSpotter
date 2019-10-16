@@ -30,9 +30,9 @@
 
             <tr th:each="power:${powers}">
                 <td th:text="${power.name}">Name</td>
-                <td th:text="${power.description}">Address</td>
+                <td th:text="${power.description}">Description</td>
                 <td><div th:if="${power.unique} == true"><i class="fas fa-check-square"></i></div><div th:if="${power.unique} == false"><i class="fas fa-times"></i></div></td>
-                <td><i class="fas fa-info-circle"></i></td>
+                <td><a href="#" th:onclick="'javascript:openPowerModal(\'' + ${power.id} + '\');'"><i class="fas fa-info-circle"></i></a></td>
                 <td><a href="#" th:href="@{editPowers(id=${power.id})}"><i class="fas fa-edit"></i></a></td>
                 <td><a href="#" th:href="@{deletePower(id=${power.id})}"><i class="fas fa-minus-square"></i></a></td>
 
@@ -83,6 +83,8 @@
 
 
 
+
+
         <!-- Modal content-->
 <div id="addPower" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -103,8 +105,8 @@
                                 <input type="text" class="form-control" id="name" name="name"/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label" for="description">description</label>
-                                <input type="text" class="form-control" id="description" name="description"/>
+                                <label class="col-form-label" for="description">Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
@@ -130,7 +132,17 @@
 </div>
 
 
-
+<script>
+    function openPowerModal(id) {
+        $.ajax({
+            url:"/power/" + id,
+            success: function(data) {
+                $("#powerModalHolder").html(data);
+                $("#powerModal").modal("show");
+            }
+        })
+    }
+</script>
 
 <!-- /.container -->
 

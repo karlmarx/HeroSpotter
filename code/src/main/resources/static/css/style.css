@@ -1,7 +1,28 @@
-
+body {
+    font-family: 'Arvo', sans-serif;
+    font-size: 110%;
+}
+/* font-family: 'Arvo', serif;
+font-family: 'Teko', sans-serif;
+font-family: 'Press Start 2P', cursive;
+font-family: 'Rubik Mono One', sans-serif;
+font-family: 'Basic', sans-serif; */
 #locationField, #controls {
     position: relative;
     width: 480px;
+}
+.map-container-5{
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+}
+.map-container-5 iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
 }
 #autocomplete {
     position: absolute;

@@ -5,8 +5,11 @@ import com.karlmarxindustries.herospotter.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -33,19 +36,13 @@ public class MVCController {
         return "locations";
     }
 
-    //    @PostMapping("/addLocation")
-//public String addLocation (HttpServletRequest request) {
-//    String name = request.getParameter("name");
-//    String address = request.getParameter("address");
-//    double latitude = Double.parseDouble(request.getParameter("latitude"));
-//    double longitude = Double.parseDouble(request.getParameter("latitude"));
-//    Location location = new Location();
-//    location.setAddress(address);
-//    location.setName(name);
-//    location.setLatitude(latitude);
-//    location.setLongitude(longitude);
-//
-//    }
+    @RequestMapping("/location/{id}")
+    public String location(@PathVariable("id") String id, ModelMap model) {
+        Location location = locations.findById(Integer.parseInt(id)).orElse(null);
+        model.addAttribute("location", location);
+        return "fragments/stylingFragment :: locationModalContents";
+    }
+
     @PostMapping("/addLocation")
     public String addLocation(Location location, HttpServletRequest request) {
         location.setPlaceId(request.getParameter("placeID"));
@@ -79,6 +76,17 @@ public class MVCController {
         locations.deleteById(id);
         return "redirect:/locations";
     }
+
+    @RequestMapping("/organization/{id}")
+    public String organization(@PathVariable("id") String id, ModelMap model) {
+        Organization organization = orgs.findById(Integer.parseInt(id)).orElse(null);
+        model.addAttribute("organization", organization);
+        List<Super> superList = supers.findByOrganizations(organization);
+        model.addAttribute("supers", superList);
+        model.addAttribute("superNum", superList.size());
+        return "fragments/stylingFragment :: organizationModalContents";
+    }
+
 
     @GetMapping("/organizations")
     public String displayOrganizations(Model model) {
@@ -122,6 +130,12 @@ public class MVCController {
         return "redirect:/organizations";
     }
 
+    @RequestMapping("/power/{id}")
+    public String power(@PathVariable("id") String id, ModelMap model) {
+        Power power = powers.findById(Integer.parseInt(id)).orElse(null);
+        model.addAttribute("power", power);
+        return "fragments/stylingFragment :: modalContents";
+    }
     @GetMapping("/powers")
     public String displayPowers(Model model) {
         List<Power> powerList = powers.findAll();
@@ -179,7 +193,21 @@ public class MVCController {
         model.addAttribute("organizations", organizationList);
         return "supers";
     }
-
+    @RequestMapping("/super/{id}")
+    public String superDisplay(@PathVariable("id") String id, ModelMap model) {
+        Super super_ = supers.findById(Integer.parseInt(id)).orElse(null);
+        model.addAttribute("super", super_);
+        List<Power> powerList = powers.findBySuperMembers(super_);
+        List<Organization> orgsList = orgs.findBySuperMembers(super_);
+        model.addAttribute("powers", powerList);
+        model.addAttribute("orgs", orgsList);
+        model.addAttribute("powerNum", powerList.size());
+        model.addAttribute("orgNum", orgsList.size());
+        return "fragments/stylingFragment :: superModalContents";
+//        Power power = powers.findById(Integer.parseInt(id)).orElse(null);
+//        model.addAttribute("power", power);
+//        return "fragments/stylingFragment :: modalContents";
+    }
     @PostMapping("/addSuper")
     public String addSuper(Super super_, HttpServletRequest request) {
         String[] powerIds = request.getParameterValues("powerId");
@@ -257,6 +285,17 @@ public class MVCController {
         List<Sighting> sightingList = sightings.findAll();
         model.addAttribute("sightings", sightingList);
         return "sightings";
+    }
+    @RequestMapping("/sighting/{id}")
+    public String sighting(@PathVariable("id") String id, ModelMap model) {
+        Sighting sighting = sightings.findById(Integer.parseInt(id)).orElse(null);
+        model.addAttribute("sighting", sighting);
+        Super sightingSuper = sighting.getSuperPerson();
+        Location sightingLocation = sighting.getLocation();
+        model.addAttribute("super", sightingSuper);
+        model.addAttribute("location", sightingLocation);
+        return "fragments/stylingFragment :: sightingModalContents";
+
     }
 
     @PostMapping("/addSighting")

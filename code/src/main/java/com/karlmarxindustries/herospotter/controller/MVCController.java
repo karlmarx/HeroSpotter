@@ -50,8 +50,8 @@ public class MVCController {
     @PostMapping("/addLocation")
     public String addLocation(Location location, HttpServletRequest request) {
         location.setPlaceId(request.getParameter("placeID"));
-        Location filledInLocation = service.fillEmptyLocationFields(location);
-        locations.save(filledInLocation);
+        location = service.fillEmptyLocationFields(location);
+        locations.save(location);
         return "redirect:/locations";
     }
 
@@ -104,7 +104,7 @@ public class MVCController {
     @PostMapping("/addOrganization")
     public String addOrganization(Organization organization, HttpServletRequest request) {
         organization.setPlaceId(request.getParameter("placeID"));
-        Organization filledInOrg = service.fillEmptyOrgFields(organization);
+        Organization filledInOrg = service.censorAndFillOrg(organization);
         orgs.save(filledInOrg);
         return "redirect:/organizations";
     }
@@ -127,8 +127,11 @@ public class MVCController {
         organization.setUrl(request.getParameter("url"));
         organization.setPhoneNumber(request.getParameter("phoneNumber"));
         organization.setPlaceId(request.getParameter("placeID"));
-        Organization filledInOrg = service.fillEmptyOrgFields(organization);
-        orgs.save(filledInOrg);
+        organization.setDescription(request.getParameter("description"));
+        Organization censoredOrg = service.censorAndFillOrg(organization);
+
+//                make a generic method??
+        orgs.save(censoredOrg);
         return "redirect:/organizations";
     }
 
@@ -329,6 +332,7 @@ public class MVCController {
         model.addAttribute("locations", locationList);
         return "editSighting";
     }
+
 
     @PostMapping("/editSighting")
     public String editSightingPartTwo(HttpServletRequest request) {

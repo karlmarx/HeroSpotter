@@ -94,5 +94,7 @@ function openOrganizationModal(id) {
         }
     })
 }
-
+function form_submit() {
+    document.getElementById("add-location-form").submit();
+}
 

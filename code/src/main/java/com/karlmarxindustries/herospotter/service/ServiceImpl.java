@@ -4,13 +4,14 @@ import com.karlmarxindustries.herospotter.dto.Location;
 import com.karlmarxindustries.herospotter.dto.Organization;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.*;
 
 @Service
 public class ServiceImpl implements ServiceLayer {
+    private final String CURSE_FILE = "resource/list.txt";
     private final List<String> ipsumList = new ArrayList<>(Arrays.asList("Lorem ipsum dolor amet distillery selfies glossier chia franzen, celiac esse sed pour-over non disrupt. Mlkshk narwhal poutine waistcoat, kale chips ethical cliche selvage cronut enim succulents mumblecore leggings. Food truck dreamcatcher farm-to-table mlkshk subway tile non nisi. Crucifix franzen pok pok, palo santo occaecat chambray wayfarers asymmetrical edison bulb yuccie disrupt in et. Migas craft beer kitsch, fingerstache umami food truck artisan consectetur consequat asymmetrical pour-over knausgaard duis.",
 
             "DIY aliqua microdosing hashtag sunt, squid ramps master cleanse enim. Fashion axe heirloom single-origin coffee coloring book offal ipsum do pork belly duis man bun succulents irure consequat. Mixtape truffaut humblebrag woke sunt. Fashion axe photo booth thundercats echo park subway tile tbh.", 
@@ -49,9 +50,34 @@ public class ServiceImpl implements ServiceLayer {
             "Qui 3 wolf moon deserunt yr woke beard meh. Messenger bag swag polaroid et, air plant taiyaki iPhone cred migas ex godard. Bicycle rights chambray butcher, blog poutine vice irure. Small batch deserunt neutra chambray, lorem unicorn chicharrones. Whatever adaptogen kogi chicharrones. Retro hot chicken ethical, consequat irony try-hard taxidermy kombucha pork belly bicycle rights occaecat deserunt." ,
      
             "Gentrify asymmetrical VHS, butcher tempor put a bird on it 3 wolf moon ea affogato lo-fi culpa bushwick pug skateboard wolf. Pinterest helvetica portland, austin migas chillwave sustainable occupy scenester vegan lomo artisan before they sold out 90's mustache. Duis ut banjo, keytar typewriter et sustainable flexitarian occupy slow-carb lo-fi distillery literally celiac. Edison bulb deserunt plaid messenger bag, drinking vinegar meh chartreuse shoreditch fam hot chicken ut blog typewriter adaptogen."));
+//    @Override
+//    public boolean isStringProfane(String string) {
+//        PythonInterpreter pi = new PythonInterpreter();
+//        pi.set("filepath", new PyString("list.txt"));
+//        pi.set("testString", new PyString(string));
+//        pi.set("count", new PyInteger(0));
+//        pi.set("curses", new PyList());
+//        pi.exec("with open(filepath) as fp:");
+//        pi.exec("    for line in fp.readlines():\n");
+//    }
     @Override
     public boolean isStringProfane(String string) {
+        List<String> curseList = getCurseList();
+        for (String curse : curseList) {
+            if (string.toUpperCase().contains(curse.toUpperCase())) {
+                return true;
+            } else{
+                return false;
+            }
+        }
         return false;
+    }
+    public String censorString (String string) {
+        List<String> curseList = getCurseList();
+        for (String curse : curseList) {
+            string.replaceAll("(?i)" + curse, "*******");
+        }
+        return string;
     }
     @Override
     public String generateFillerText() {
@@ -59,9 +85,11 @@ public class ServiceImpl implements ServiceLayer {
         int randomIndex = random.nextInt(ipsumList.size());
         return ipsumList.get(randomIndex);
     }
-    public Organization fillEmptyOrgFields(Organization org) {
+    public Organization censorAndFillOrg(Organization org) {
         if (org.getDescription().equals("")) {
             org.setDescription(generateFillerText());
+        } else {
+            org.setDescription(censorString(org.getDescription()));
         }
         if (org.getPhoneNumber().equals("")) {
             org.setPhoneNumber("none listed");
@@ -71,9 +99,13 @@ public class ServiceImpl implements ServiceLayer {
         }
         if (org.getEmail().equals("")) {
             org.setEmail("none listed");
+        } else {
+            org.setEmail(censorString(org.getEmail()));
         }
         if (org.getUrl().equals("")) {
             org.setUrl("none listed");
+        } else {
+            org.setUrl(censorString(org.getUrl()));
         }
         return org;
     }
@@ -83,6 +115,22 @@ public class ServiceImpl implements ServiceLayer {
             location.setName("[unnamed location no. " + random.nextInt(1000000) + "]");
         }
         return location;
+    }
+    private List<String> getCurseList(){
+        List<String> curseList = new ArrayList<>();
+        try {
+            Scanner scanner = new Scanner(new BufferedReader(new FileReader(CURSE_FILE)));
+            while (scanner.hasNextLine()) {
+                String currentLine = scanner.nextLine();
+                if (!(currentLine.equals("")) && !(currentLine.equals(" ")) ){
+                    curseList.add(currentLine);
+                }
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found");
+        }
+        return curseList;
     }
 
 }

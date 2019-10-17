@@ -26,16 +26,16 @@ public class LocationRepositoryTest {
     }
     @Test
     public void testSaveOneGetAll() {
-        Location location = new Location(1, "The Software Guild", "address", "");
+        Location location = new Location("The Software Guild", "address", "");
         locationRepo.save(location);
         List<Location> shouldHaveOne = locationRepo.findAll();
         Assertions.assertEquals(1, shouldHaveOne.size());
     }
     @Test
     public void testSaveManyGetAll() {
-        Location location = new Location(1, "The Software Guild", "address", "asdf");
-        Location location2 = new Location(2, "Karl MArx, Industries", "123 e main st ", "asdf");
-        Location location3 = new Location(3, "The Software Guild", "address", "asdfasdfadfadsfasdfdsfaf");
+        Location location = new Location("The Software Guild", "address", "asdf");
+        Location location2 = new Location("Karl MArx, Industries", "123 e main st ", "asdf");
+        Location location3 = new Location("The Software Guild", "address", "asdfasdfadfadsfasdfdsfaf");
         locationRepo.save(location);
         locationRepo.save(location2);
         locationRepo.save(location3);
@@ -44,9 +44,9 @@ public class LocationRepositoryTest {
     }
     @Test
     public void testFindByID() {
-        Location location = new Location(1, "The Software Guild", "address", "asdf");
-        Location location2 = new Location(2, "Karl MArx, Industries", "123 e main st ", "asdf");
-        Location location3 = new Location(3, "The Software Guild", "address", "asdfasdfadfadsfasdfdsfaf");
+        Location location = new Location("The Software Guild", "address", "asdf");
+        Location location2 = new Location("Karl MArx, Industries", "123 e main st ", "asdf");
+        Location location3 = new Location("The Software Guild", "address", "asdfasdfadfadsfasdfdsfaf");
         location = locationRepo.save(location);
         location2 = locationRepo.save(location2);
         location3 = locationRepo.save(location3);
@@ -59,7 +59,7 @@ public class LocationRepositoryTest {
     }
     @Test
     public void testSavedUpdatesObject() {
-        Location location = new Location(1, "The Software Guild", "address", "asdf");
+        Location location = new Location("The Software Guild", "address", "asdf");
         location = locationRepo.save(location);
         Location shouldBe1 = locationRepo.findById(location.getId()).orElse(null);
         Assertions.assertEquals(location, shouldBe1);
@@ -72,9 +72,9 @@ public class LocationRepositoryTest {
     }
     @Test
     public void testDelete() {
-        Location location = new Location(1, "The Software Guild", "address", "asdf");
-        Location location2 = new Location(2, "Karl MArx, Industries", "123 e main st ", "asdf");
-        Location location3 = new Location(3, "The Software Guild", "address", "asdfasdfadfadsfasdfdsfaf");
+        Location location = new Location("The Software Guild", "address", "asdf");
+        Location location2 = new Location("Karl MArx, Industries", "123 e main st ", "asdf");
+        Location location3 = new Location("The Software Guild", "address", "asdfasdfadfadsfasdfdsfaf");
         location = locationRepo.save(location);
         location2 = locationRepo.save(location2);
         location3 = locationRepo.save(location3);
@@ -85,7 +85,7 @@ public class LocationRepositoryTest {
         long shouldBe0 = locationRepo.count();
         Assertions.assertEquals(0, shouldBe0);
         Assertions.assertEquals(3, shouldBe3);
-        Location locationNew = new Location(7, "The West Software Guild", "address", "asdf");
+        Location locationNew = new Location("The West Software Guild", "address", "asdf");
         locationNew = locationRepo.save(locationNew);
         locationRepo.deleteById(locationNew.getId());
         long shouldBe0Again = locationRepo.count();

@@ -11,7 +11,7 @@ import java.util.*;
 
 @Service
 public class ServiceImpl implements ServiceLayer {
-    private final String CURSE_FILE = "resource/list.txt";
+    private final String CURSE_FILE = "list.txt";
     private final List<String> ipsumList = new ArrayList<>(Arrays.asList("Lorem ipsum dolor amet distillery selfies glossier chia franzen, celiac esse sed pour-over non disrupt. Mlkshk narwhal poutine waistcoat, kale chips ethical cliche selvage cronut enim succulents mumblecore leggings. Food truck dreamcatcher farm-to-table mlkshk subway tile non nisi. Crucifix franzen pok pok, palo santo occaecat chambray wayfarers asymmetrical edison bulb yuccie disrupt in et. Migas craft beer kitsch, fingerstache umami food truck artisan consectetur consequat asymmetrical pour-over knausgaard duis.",
 
             "DIY aliqua microdosing hashtag sunt, squid ramps master cleanse enim. Fashion axe heirloom single-origin coffee coloring book offal ipsum do pork belly duis man bun succulents irure consequat. Mixtape truffaut humblebrag woke sunt. Fashion axe photo booth thundercats echo park subway tile tbh.", 
@@ -75,7 +75,7 @@ public class ServiceImpl implements ServiceLayer {
     public String censorString (String string) {
         List<String> curseList = getCurseList();
         for (String curse : curseList) {
-            string.replaceAll("(?i)" + curse, "*******");
+            string = string.replaceAll("(?i)" + curse, "[expletive]");
         }
         return string;
     }

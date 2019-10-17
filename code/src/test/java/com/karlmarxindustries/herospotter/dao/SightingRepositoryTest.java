@@ -39,9 +39,9 @@ class SightingRepositoryTest {
         supers.save(super_3);
         locations.deleteAll();
 
-        Location location = new Location(1, "The Software Guild", "address", "asdf");
-        Location location2 = new Location(2, "Karl MArx, Industries", "123 e main st ", "asdf");
-        Location location3 = new Location(3, "The Software Guild", "address", "asdfasdfadfadsfasdfdsfaf");
+        Location location = new Location("The Software Guild", "address", "asdf");
+        Location location2 = new Location("Karl MArx, Industries", "123 e main st ", "asdf");
+        Location location3 = new Location("The Software Guild", "address", "asdfasdfadfadsfasdfdsfaf");
         locations.save(location);
         locations.save(location2);
         locations.save(location3);

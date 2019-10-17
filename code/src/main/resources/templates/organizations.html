@@ -135,7 +135,7 @@
                         </div>
                         <input type="hidden" id="placeID" name="placeID" />
                         <input type="hidden" id="latitude" name="latitude" />
-                        <input type="hidden" id="longitude" name="longitude" />
+                        <input id="longitude" name="longitude" />
 
 
 
@@ -228,6 +228,7 @@
 
 
 <div th:replace="fragments/stylingFragment.html :: googleAuto"></div>
+<div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>
 
 <!-- /.container -->
 

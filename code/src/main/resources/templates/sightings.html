@@ -58,50 +58,6 @@
 
 
 
-<!--    <div id="add form">-->
-<!--        <h3>Report a Sighting</h3>-->
-<!--        <form type="form" action="addSighting" method="POST">-->
-<!--            <div class="form-group row">-->
-<!--                <label for="date" class="col-2 col-form-label">Date</label>-->
-<!--                <div class="col-8">-->
-<!--                    <input class="form-control" type="date" value="2011-08-19" id="date" name="date">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="super">Superperson</label>-->
-<!--                <select class="form-control" id="super" name="super">-->
-<!--                    <option th:each="super : ${supers}"-->
-<!--                                   th:value="${super.id}"-->
-<!--                                   th:text="${super.name}" >Superperson</option>-->
-<!--                    <option>Add New SuperPerson</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="location">Location</label>-->
-<!--                <select class="form-control" id="location" name="location">-->
-<!--                    <option th:each="location : ${locations}"-->
-<!--                            th:value="${location.id}"-->
-<!--                            th:text="${location.name + '(' + location.address + ')'}">Location</option>-->
-<!--                    <option>Add New Location</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label class="col-4" for="reporterName">Your Name</label>-->
-<!--                <div class="col-10">-->
-<!--                <input type="name" class="col-8 form-control" id="reporterName" name="reporter-name"/>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                    <label for="upload-image">Upload Image</label>-->
-<!--                    <input type="file" class="form-control-file" id="upload-image">-->
-<!--                </div>-->
-<!--            <button type="submit" class="btn btn-primary">Add Sighting</button>-->
-<!--        </form>-->
-<!--    </div>-->
-
-
-
-
         <!-- Modal -->
         <div id="addSighting" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -146,7 +102,7 @@
                                 <div class="form-group">
                                     <label for="reporterName" class="col-form-label">Your Name</label>
                                     <div class="">
-                                        <input type="name" class="form-control" id="reporterName" name="reporter-name"/>
+                                        <input type="name" class="form-control" id="reporterName" name="reporterName"/>
                                     </div>
                                 </div>
                                 <div class="form-group">

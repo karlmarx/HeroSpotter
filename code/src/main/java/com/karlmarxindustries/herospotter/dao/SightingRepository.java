@@ -10,4 +10,6 @@ import java.util.List;
 public interface SightingRepository extends JpaRepository<Sighting, Integer> {
     List<Sighting> findBySuperPerson(Super superPerson);
     List<Sighting> findByDate(LocalDate date);
+//    Page<Sighting> findByDate(LocalDate date, Pageable pageable);
+    List<Sighting> findFirst10ByOrderByIdDesc ();
 }

@@ -32,6 +32,12 @@ public class MVCController {
     @Autowired
     ServiceImpl service;
 
+    @GetMapping("/")
+    public String displayTop10(Model model) {
+        List<Sighting> lastTenSightings = sightings.findFirst10ByOrderByIdDesc();
+        model.addAttribute("sightings", lastTenSightings);
+        return "index";
+    }
 
     @GetMapping("/locations")
     public String displayLocations(Model model) {
@@ -318,6 +324,7 @@ public class MVCController {
         sighting.setSuperPerson(supers.findById(Integer.parseInt(superId)).orElse(null)); //is this right way to use or else?
         sighting.setLocation(locations.findById(Integer.parseInt(locationId)).orElse(null));
         sighting.setApproved(false);
+        sighting.setReporterName(request.getParameter("reporterName"));
         sightings.save(sighting);
         return "redirect:/sightings";
     }

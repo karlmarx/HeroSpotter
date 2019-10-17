@@ -1,12 +1,17 @@
 body {
-    font-family: 'Arvo', sans-serif;
-    font-size: 110%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 100%;
 }
 /* font-family: 'Arvo', serif;
 font-family: 'Teko', sans-serif;
 font-family: 'Press Start 2P', cursive;
 font-family: 'Rubik Mono One', sans-serif;
-font-family: 'Basic', sans-serif; */
+font-family: 'Basic', sans-serif;
+font-family: 'Oswald', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Fjalla One', sans-serif;
+font-family: 'Anton', sans-serif;*/
  #controls {
     position: relative;
     width: 480px;

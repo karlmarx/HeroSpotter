@@ -58,9 +58,9 @@
                                             th:value="${power.id}"
                                             th:text="${power.name}" selected>
                                         Powers Name</option>
-                                    <option th:each="power:${powerscurrent}"
-                                            th:value="${power.id}"
-                                            th:text="${power.name}">
+                                    <option th:each="powermissing:${powersmissing}"
+                                            th:value="${powermissing.id}"
+                                            th:text="${powermissing.name}">
                                         Powers Name</option>
                                 </select>
                             </div>
@@ -75,9 +75,8 @@
                         </div>
 
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="isVillain" name="isVillain"/>
-
-                            <label class="custom-control-label" for="isVillain" th:checked="${super.villain}" >Check if Villain</label>
+                            <input type="checkbox" class="custom-control-input" id="isVillain" name="isVillain" th:checked="${villain}" />
+                            <label class="custom-control-label" for="isVillain" >Check if Villain</label>
 
                         </div>
 

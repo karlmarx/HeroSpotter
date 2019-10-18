@@ -1,5 +1,7 @@
 package com.karlmarxindustries.herospotter.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class Power {
     @Column(name="is_unique")
     boolean isUnique;
     @ManyToMany(mappedBy="powers")
+    @JsonIgnore
     private List<Super> superMembers;
 
     public Power(String name, String description, boolean isUnique) {

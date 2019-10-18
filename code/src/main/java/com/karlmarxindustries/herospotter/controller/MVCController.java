@@ -261,6 +261,7 @@ public class MVCController {
         int id = Integer.parseInt(request.getParameter("id"));
         Super super_ = supers.findById(id).orElse(null);
         model.addAttribute("super", super_);
+        model.addAttribute("villain", super_.isVillain());
         List<Power> powerList = powers.findAll();
         List<Power> powersCurrent = powers.findBySuperMembers(super_);
         List<Power> powersNotHad = new ArrayList<>();

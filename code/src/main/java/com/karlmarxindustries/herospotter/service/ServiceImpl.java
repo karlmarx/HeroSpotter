@@ -1,12 +1,12 @@
 package com.karlmarxindustries.herospotter.service;
 
-import com.karlmarxindustries.herospotter.dto.Location;
-import com.karlmarxindustries.herospotter.dto.Organization;
+import com.karlmarxindustries.herospotter.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -86,19 +86,27 @@ public class ServiceImpl implements ServiceLayer {
         return ipsumList.get(randomIndex);
     }
     public Organization censorAndFillOrg(Organization org) {
+        Random random = new Random();
+        if (org.getName().equals("")) {
+            org.setName("[unnamed organization no. " + random.nextInt(1000000) + "]");
+        } else {
+            org.setName(censorString(org.getName()));
+        }
         if (org.getDescription().equals("")) {
             org.setDescription(generateFillerText());
         } else {
             org.setDescription(censorString(org.getDescription()));
         }
         if (org.getPhoneNumber().equals("")) {
-            org.setPhoneNumber("none listed");
+            org.setPhoneNumber("+1-212-555-1212");
         }
         if (org.getAddress().equals("")) {
             org.setAddress("none listed");
+            org.setLatitude(32.090505d);
+            org.setLongitude(34.765808d);
         }
         if (org.getEmail().equals("")) {
-            org.setEmail("none listed");
+            org.setEmail("unknown@none.org");
         } else {
             org.setEmail(censorString(org.getEmail()));
         }
@@ -109,10 +117,12 @@ public class ServiceImpl implements ServiceLayer {
         }
         return org;
     }
-    public Location fillEmptyLocationFields(Location location) {
+    public Location censorAndFillLocation(Location location) {
         Random random = new Random();
         if (location.getName().equals("")) {
             location.setName("[unnamed location no. " + random.nextInt(1000000) + "]");
+        } else {
+            location.setName(censorString(location.getName()));
         }
         return location;
     }
@@ -132,5 +142,44 @@ public class ServiceImpl implements ServiceLayer {
         }
         return curseList;
     }
-
+    public Power censorAndFillPower(Power power) {
+        Random random = new Random();
+        if (power.getName().equals("")) {
+            power.setName("[unnamed power no. " + random.nextInt(1000000) + "]");
+        } else {
+            power.setName(censorString(power.getName()));
+        }
+        if (power.getDescription().equals("")) {
+            power.setDescription(generateFillerText());
+        } else {
+            power.setDescription(censorString(power.getDescription()));
+        }
+        return power;
+    }
+    public Super censorAndFillSuper(Super super_) {
+        Random random = new Random();
+        if (super_.getName().equals("")) {
+            super_.setName("[unnamed superhuman no. " + random.nextInt(1000000) + "]");
+        } else {
+            super_.setName(censorString(super_.getName()));
+        }
+        if (super_.getDescription().equals("")) {
+            super_.setDescription(generateFillerText());
+        } else {
+            super_.setDescription(censorString(super_.getDescription()));
+        }
+        return super_;
+    }
+    public Sighting censorAndFillSighting(Sighting sighting) {
+        Random random = new Random();
+        if (sighting.getReporterName().equals("")) {
+            sighting.setReporterName("[anonymous reporter #" + random.nextInt(1000000) + "]");
+        } else {
+            sighting.setReporterName(censorString(sighting.getReporterName()));
+        }
+        if (sighting.getDate() == null) {
+            sighting.setDate(LocalDate.now());
+        }
+        return sighting;
+    }
 }

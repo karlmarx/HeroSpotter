@@ -32,9 +32,9 @@
                 <td th:text="${organization.name}">Name</td>
                 <td th:text="${organization.address}">Address</td>
                 <td th:text="${organization.phoneNumber}">Address</td>
-                <td><a href="#" th:onclick="'javascript:openOrganizationModal(\'' + ${organization.id} + '\');'"><i class="fas fa-info-circle"></i></a></td>
-                <td><a href="#" th:href="@{editOrganization(id=${organization.id})}"><i class="fas fa-edit"></i></a></td>
-                <td><a href="#" th:href="@{deleteOrganization(id=${organization.id})}"><i class="fas fa-minus-square"></i></a></td>
+                <td><a href="#" th:onclick="'javascript:openOrganizationModal(\'' + ${organization.id} + '\');'"><i class="fas fa-info-circle d-flex justify-content-center "></i></a></td>
+                <td><a href="#" th:href="@{editOrganization(id=${organization.id})}"><i class="fas fa-edit d-flex justify-content-center "></i></a></td>
+                <td><a href="#" th:href="@{deleteOrganization(id=${organization.id})}"><i class="fas fa-minus-square d-flex justify-content-center "></i></a></td>
             </tr>
 
             </tbody>
@@ -135,7 +135,7 @@
                         </div>
                         <input type="hidden" id="placeID" name="placeID" />
                         <input type="hidden" id="latitude" name="latitude" />
-                        <input id="longitude" name="longitude" />
+                        <input type="hidden" id="longitude" name="longitude" />
 
 
 
@@ -154,81 +154,17 @@
             </div>
         </div>
 
-
-
-<!--        <div id="add form">-->
-<!--           <form type="form" action="/addOrganization" method="POST">-->
-<!--            <div class="form-group">-->
-<!--                <label class="col-4" for="name">Organization Name</label>-->
-<!--                <input type="text" class="col-8 form-control" id="name" name="name"/>-->
-<!--            </div>-->
-<!--            <div id="locationField" class="form-group row">-->
-<!--                <label for="autocomplete" class="col-3 col-form-label">Address:</label>-->
-<!--                <div class="col-9">-->
-<!--                    <input id="autocomplete"-->
-<!--                           name="address"-->
-<!--                           class=" form-control"-->
-<!--                           placeholder="Enter the address"-->
-<!--                           onFocus="geolocate()"-->
-<!--                           type="text"  />-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <br>-->
-<!--            <div class="form row">-->
-<!--                <div class="form-group col-md-3">-->
-<!--                    <label for="street_number">Number</label>-->
-<!--                    <input class="field form-control" id="street_number" disabled="true" readonly/>-->
-<!--                </div>-->
-<!--                <div class="form-group col-md-9">-->
-<!--                    <label for="route">Street</label>-->
-<!--                    <input class="field form-control" id="route" disabled="true" readonly/>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="form-row">-->
-<!--                <div class="form-group col-md-6">-->
-<!--                    <label for="locality">City</label>-->
-<!--                    <input class="field form-control" type="text" id="locality" disabled="true" readonly/>-->
-<!--                </div>-->
-<!--                <div class="form-group col-md-4">-->
-<!--                    <label for="administrative_area_level_1">State</label>-->
-<!--                    <input class="field form-control" type="text" id="administrative_area_level_1" disabled="true" readonly/>-->
-<!--                </div>-->
-<!--                <div class="form-group col-md-2">-->
-<!--                    <label for="postal_code">Zip</label>-->
-<!--                    <input class="field form-control" type="text" id="postal_code" disabled="true" readonly/>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="country">Country</label>-->
-<!--                <input class="field form-control" type="text" id="country" disabled="true" readonly/>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label class="col-4" for="email">Email</label>-->
-<!--                <input type="email" class="col-8 form-control" id="email" name="email"/>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label class="col-4" for="url">Website</label>-->
-<!--                <input type="url" class="col-8 form-control" id="url" name="url"/>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label class="col-4" for="phoneNumber">Phone Number</label>-->
-<!--                <input type="tel" class="col-8 form-control" id="phoneNumber" name="phoneNumber"/>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label class="col-4" for="description">Description</label>-->
-<!--                <input type="text" class="col-8 form-control" id="description" name="description"/>-->
-<!--            </div>-->
-<!--            <input id="placeID" name="placeID" type="hidden"/>-->
-<!--            <button type="submit" class="btn btn-primary">Add Organization</button>-->
-<!--        </form>-->
-<!--    </div>-->
+    </div>
 </main>
 
 
-
-
-<div th:replace="fragments/stylingFragment.html :: googleAuto"></div>
 <div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>
+<div th:replace="fragments/stylingFragment.html :: includes"></div>
+
+<!-- Replace the value of the key parameter with your own API key. -->
+
+<!--<div th:replace="fragments/stylingFragment.html :: googleAuto"></div>-->
+<!--<div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>-->
 
 <!-- /.container -->
 
@@ -238,7 +174,41 @@
 <!-- Placed at the end of the document so the pages load faster -->
 
 
-<div th:replace="fragments/stylingFragment.html :: includes"></div>
+
+<!--<script th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
+<!--    var orgs = [[${organizations}]];-->
+<!--    /*]]>*/-->
+<!--    function initMap() {-->
+
+<!--        var myLatLng = {lat: 0, lng: 0};-->
+
+<!--        var map = new google.maps.Map(document.getElementById('map'), {-->
+<!--            zoom: 4,-->
+<!--            center: myLatLng-->
+<!--        });-->
+<!--        for  (var i = 0; i <organizations.length; i++ ) {-->
+<!--            var l = new google.maps.LatLng(orgs[i].latitude, orgs[i].longitude);-->
+<!--            var marker = new google.maps.Marker({-->
+<!--                position: l,-->
+<!--                map: map-->
+<!--            });-->
+<!--        }-->
+
+<!--        var marker = new google.maps.Marker({-->
+<!--            position: myLatLng,-->
+<!--            map: map,-->
+<!--            title: 'Hello World!'-->
+<!--        });-->
+<!--    }-->
+
+<!--</script>-->
+<!--<script async defer-->
+<!--        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB66tFLS3_WbOT1Eln1Pi7LT6dN68L-xSc&callback=initMap"></script>-->
+
+
+
+
 
 
 </body>

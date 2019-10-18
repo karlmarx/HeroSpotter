@@ -5,6 +5,16 @@
     <!--/*/ <th:block th:include="fragments/stylingFragment.html :: head">
             </th:block> /*/-->
     <link href="../css/style.css" rel="stylesheet" th:href="@{/css/style.css}"/>
+    <style>
+        #map {
+            height: 100%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -105,7 +115,7 @@ Who made HeroSpotter?                        </button>
             </div>
         </div>
     </div>
-    <div id="map"></div>
+
 </div>
 
 
@@ -128,13 +138,35 @@ Who made HeroSpotter?                        </button>
             </div>
 
         </div>
+
     </div>
 
 
 
 
+    <div id="map"></div>
+    <!-- Replace the value of the key parameter with your own API key. -->
+    <script th:inline="javascript">
 
+        function initMap() {
+            var myLatLng = {lat: 0, lng: 0};
 
+            var map = new google.maps.Map(document.getElementById('map'), {
+
+                center: myLatLng
+            });
+           
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB66tFLS3_WbOT1Eln1Pi7LT6dN68L-xSc&callback=initMap">
+    </script>
+</main>
 
 
 
@@ -145,27 +177,28 @@ Who made HeroSpotter?                        </button>
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 
-</main>
 
-<script>
 
-    function initMap() {
-        var myLatLng = {lat: -25.363, lng: 131.044};
+<!--<script>-->
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 4,
-            center: myLatLng
-        });
+<!--    function initMap() {-->
+<!--        var myLatLng = {lat: -25.363, lng: 131.044};-->
 
-        var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            title: 'Hello World!'
-        });
-    }
-</script>
+<!--        var map = new google.maps.Map(document.getElementById('map'), {-->
+<!--            zoom: 4,-->
+<!--            center: myLatLng-->
+<!--        });-->
+
+<!--        var marker = new google.maps.Marker({-->
+<!--            position: myLatLng,-->
+<!--            map: map,-->
+<!--            title: 'Hello World!'-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
+
 
         <div th:replace="fragments/stylingFragment.html :: includes"></div>
-
+<!--<div th:replace="fragments/stylingFragment.html :: mapScript"></div>-->
 </body>
 </html>

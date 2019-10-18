@@ -5,12 +5,25 @@
     <!--/*/ <th:block th:include="fragments/stylingFragment.html :: head">
             </th:block> /*/-->
     <link href="../css/style.css" rel="stylesheet" th:href="@{/css/style.css}"/>
+    <style>
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body>
 <div th:replace="fragments/stylingFragment.html:: navbar"></div>
 
 <main role="main" class="container">
+
+    <!-- Replace the value of the key parameter with your own API key. -->
 
     <div class="container">
         <div class="container">
@@ -37,9 +50,9 @@
                 <td><span th:each="organization:${super.organizations}"><span th:text="${organization.name}"/><br></span></td>
                 <td><span th:each="power:${super.powers}"><span th:text="${power.name}"/><br></span></td>
                 <td th:text="${super.description}">Description</td>
-                <td><a href="#" th:onclick="'javascript:openSuperModal(\'' + ${super.id} + '\');'"><i class="fas fa-info-circle"></i></a></td>
-                <td><a href="#" th:href="@{editSuper(id=${super.id})}"><i class="fas fa-edit"></i></a></td>
-                <td><a href="#" th:href="@{deleteSuper(id=${super.id})}"><i class="fas fa-minus-square"></i></a></td>
+                <td><a href="#" th:onclick="'javascript:openSuperModal(\'' + ${super.id} + '\');'"><i class="d-flex justify-content-center fas fa-info-circle"></i></a></td>
+                <td><a href="#" th:href="@{editSuper(id=${super.id})}"><i class="d-flex justify-content-center fas fa-edit"></i></a></td>
+                <td><a href="#" th:href="@{deleteSuper(id=${super.id})}"><i class="d-flex justify-content-center fas fa-minus-square"></i></a></td>
 
             </tr>
 
@@ -96,10 +109,10 @@
                         <div class="col-9">
                             <select multiple id="organizations" name="organizationId"
                                     class="form-control" >
-                                <option th:each="organization:${organizations}"
-                                        th:value="${organization.id}"
-                                        th:text="${organization.name}">
-                                    Organizations Name</option>
+<!--                                <option th:each="organization:${organizations}"-->
+<!--                                        th:value="${organization.id}"-->
+<!--                                        th:text="${organization.name}">-->
+<!--                                    Organizations Name</option>-->
                             </select>
                         </div>
                     </div>
@@ -151,6 +164,9 @@
     </div>
 </div>
 
+<!-- Replace the value of the key parameter with your own API key. -->
+
+
 
 <!-- /.container -->
 
@@ -161,6 +177,6 @@
 
 
 <div th:replace="fragments/stylingFragment.html :: includes"></div>
-<script src="../js/hero.js" th:href="@{/js/hero.js}"></script>
+
 </body>
 </html>

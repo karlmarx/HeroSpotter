@@ -56,7 +56,7 @@ public class MVCController {
     @PostMapping("/addLocation")
     public String addLocation(Location location, HttpServletRequest request) {
         location.setPlaceId(request.getParameter("placeID"));
-        location = service.fillEmptyLocationFields(location);
+        location = service.censorAndFillLocation(location);
         locations.save(location);
         return "redirect:/locations";
     }
@@ -78,13 +78,15 @@ public class MVCController {
         location.setName(request.getParameter("name"));
         location.setAddress(request.getParameter("address"));
         location.setPlaceId(request.getParameter("placeID"));
-        Location filledInLocation = service.fillEmptyLocationFields(location);
+        Location filledInLocation = service.censorAndFillLocation(location);
         locations.save(filledInLocation);
         return "redirect:/locations";
     }
 
     @GetMapping("/deleteLocation")
     public String deleteLocation(Integer id) {
+        List<Sighting> sightingsAtLocation = sightings.findByLocation_Id(id);
+        sightings.deleteAll(sightingsAtLocation);
         locations.deleteById(id);
         return "redirect:/locations";
     }
@@ -167,6 +169,7 @@ public class MVCController {
         } else {
             power.setUnique(false);
         }
+        power = service.censorAndFillPower(power);
         powers.save(power);
         return "redirect:/powers";
     }
@@ -190,6 +193,7 @@ public class MVCController {
         } else {
             power.setUnique(false);
         }
+        power = service.censorAndFillPower(power);
         powers.save(power);
         return "redirect:/powers";
     }
@@ -244,6 +248,7 @@ public class MVCController {
         } else {
             super_.setVillain(false);
         }
+        super_ = service.censorAndFillSuper(super_);
         supers.save(super_);
         return "redirect:/supers";
     }
@@ -283,12 +288,15 @@ public class MVCController {
         }
         super_.setOrganizations(orgList);
         super_.setPowers(powerList);
+        super_ = service.censorAndFillSuper(super_);
         supers.save(super_);
         return "redirect:/supers";
     }
 
     @GetMapping("/deleteSuper")
     public String deleteSuper(Integer id) {
+        List<Sighting> sightingsBySuper = sightings.findBySuperPerson(supers.getOne(id));
+        sightings.deleteAll(sightingsBySuper);
         supers.deleteById(id);
         return "redirect:/supers";
     }
@@ -325,6 +333,7 @@ public class MVCController {
         sighting.setLocation(locations.findById(Integer.parseInt(locationId)).orElse(null));
         sighting.setApproved(false);
         sighting.setReporterName(request.getParameter("reporterName"));
+        sighting = service.censorAndFillSighting(sighting);
         sightings.save(sighting);
         return "redirect:/sightings";
     }
@@ -351,6 +360,7 @@ public class MVCController {
         sighting.setSuperPerson(supers.findById(Integer.parseInt(superId)).orElse(null)); //is this right way to use or else?
         sighting.setLocation(locations.findById(Integer.parseInt(locationId)).orElse(null));
         sighting.setApproved(Boolean.parseBoolean(request.getParameter("approved")));
+        sighting = service.censorAndFillSighting(sighting);
         sightings.save(sighting);
         return "redirect:/sightings";
     }

@@ -63,3 +63,4 @@ ALTER TABLE supers_powers
 ADD FOREIGN KEY (power_id) REFERENCES powers(id);
 ALTER TABLE supers_powers
 ADD FOREIGN KEY (super_id) REFERENCES supers(id);
+

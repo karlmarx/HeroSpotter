@@ -7,6 +7,8 @@ create table HeroSpotterTest.locations
     id       smallint auto_increment
         primary key,
     name     varchar(40)  null,
+    latitude DECIMAL(10,6) null ,
+    longitude DECIMAL(10,6) null,
     address  varchar(200) null,
     place_id varchar(100) null
 );
@@ -17,7 +19,8 @@ create table HeroSpotterTest.organizations
         primary key,
     name         varchar(40)   not null,
         place_id    varchar(100) null,
-
+latitude DECIMAL(10,6) null,
+    longitude DECIMAL(10,6) null,
     email        varchar(320)  null,
     url          varchar(2083) null,
     phone_number varchar(20)   null,

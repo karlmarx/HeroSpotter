@@ -31,10 +31,10 @@
             <tr th:each="power:${powers}">
                 <td th:text="${power.name}">Name</td>
                 <td th:text="${power.description}">Description</td>
-                <td><div th:if="${power.unique} == true"><i class="fas fa-check-square"></i></div><div th:if="${power.unique} == false"><i class="fas fa-times"></i></div></td>
-                <td><a href="#" th:onclick="'javascript:openPowerModal(\'' + ${power.id} + '\');'"><i class="fas fa-info-circle"></i></a></td>
-                <td><a href="#" th:href="@{editPowers(id=${power.id})}"><i class="fas fa-edit"></i></a></td>
-                <td><a href="#" th:href="@{deletePower(id=${power.id})}"><i class="fas fa-minus-square"></i></a></td>
+                <td><div th:if="${power.unique} == true"><i class="d-flex justify-content-center fas fa-check-square fa-2x"></i></div><div th:if="${power.unique} == false"><i class="d-flex justify-content-center fas fa-times-circle fa-2x"></i></div></td>
+                <td><a href="#" th:onclick="'javascript:openPowerModal(\'' + ${power.id} + '\');'"><i class="d-flex justify-content-center fas fa-info-circle fa-2x"></i></a></td>
+                <td><a href="#" th:href="@{editPowers(id=${power.id})}"><i class="d-flex justify-content-center fas fa-edit fa-2x"></i></a></td>
+                <td><a href="#" th:href="@{deletePower(id=${power.id})}"><i class="d-flex justify-content-center fas fa-minus-square fa-2x"></i></a></td>
 
             </tr>
 

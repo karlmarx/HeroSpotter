@@ -12,4 +12,5 @@ public interface SightingRepository extends JpaRepository<Sighting, Integer> {
     List<Sighting> findByDate(LocalDate date);
 //    Page<Sighting> findByDate(LocalDate date, Pageable pageable);
     List<Sighting> findFirst10ByOrderByIdDesc ();
+    List<Sighting> findByLocation_Id(int id);
 }

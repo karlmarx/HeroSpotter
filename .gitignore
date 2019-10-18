@@ -1,7 +1,7 @@
 # Has Google API key inside
-/code/src/main/resources/templates/fragments/stylingFragment.html
+# /code/src/main/resources/templates/fragments/stylingFragment.html
 # Has MySQL password
-/code/src/main/resources/application.properties
+# /code/src/main/resources/application.properties
 
 
 

@@ -32,9 +32,9 @@
                 <td th:text="${organization.name}">Name</td>
                 <td th:text="${organization.address}">Address</td>
                 <td th:text="${organization.phoneNumber}">Address</td>
-                <td><a href="#" th:onclick="'javascript:openOrganizationModal(\'' + ${organization.id} + '\');'"><i class="fas fa-info-circle d-flex justify-content-center "></i></a></td>
-                <td><a href="#" th:href="@{editOrganization(id=${organization.id})}"><i class="fas fa-edit d-flex justify-content-center "></i></a></td>
-                <td><a href="#" th:href="@{deleteOrganization(id=${organization.id})}"><i class="fas fa-minus-square d-flex justify-content-center "></i></a></td>
+                <td><a href="#" th:onclick="'javascript:openOrganizationModal(\'' + ${organization.id} + '\');'"><i class="fas fa-info-circle d-flex justify-content-center  fa-2x"></i></a></td>
+                <td><a href="#" th:href="@{editOrganization(id=${organization.id})}"><i class="fas fa-edit d-flex justify-content-center  fa-2x"></i></a></td>
+                <td><a href="#" th:href="@{deleteOrganization(id=${organization.id})}"><i class="fas fa-minus-square d-flex justify-content-center  fa-2x"></i></a></td>
             </tr>
 
             </tbody>

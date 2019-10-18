@@ -45,9 +45,9 @@
                 <td th:text="${sighting.superPerson.name}">Superperson</td>
                 <td th:text="${sighting.location.name + ': ' + sighting.location.address}">Address</td>
                 <td th:text="${sighting.reporterName}">Reporter</td>
-                <td><a href="#" th:onclick="'javascript:openSightingModal(\'' + ${sighting.id} + '\');'"><i class="d-flex justify-content-center fas fa-info-circle"></i></a></td>
-                <td><a href="#" th:href="@{editSighting(id=${sighting.id})}"><i class="d-flex justify-content-center fas fa-edit"></i></a></td>
-                <td><a href="#" th:href="@{deleteSighting(id=${sighting.id})}"><i class="d-flex justify-content-center fas fa-minus-square"></i></a></td>
+                <td><a href="#" th:onclick="'javascript:openSightingModal(\'' + ${sighting.id} + '\');'"><i class="d-flex justify-content-center fas fa-info-circle fa-2x"></i></a></td>
+                <td><a href="#" th:href="@{editSighting(id=${sighting.id})}"><i class="d-flex justify-content-center fas fa-edit fa-2x"></i></a></td>
+                <td><a href="#" th:href="@{deleteSighting(id=${sighting.id})}"><i class="d-flex justify-content-center fas fa-minus-square fa-2x"></i></a></td>
             </tr>
 
             </tbody>
@@ -98,9 +98,10 @@
                                         <option th:each="super : ${supers}"
                                                 th:value="${super.id}"
                                                 th:text="${super.name}" >Superperson</option>
-                                        <option>Add New SuperPerson</option>
+                                        <option><a href="#" th:onclick="openAddSuper()">Add New SuperPerson</a> </option>
                                     </select>
                                 </div>
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addSuper"><i class="fas fa-plus-square"></i> Add New Super</button>
                                 <div class="form-group">
                                     <label for="location" class="col-form-label">Location</label>
                                     <select class="form-control" id="location" name="location">
@@ -110,6 +111,9 @@
                                         <option>Add New Location</option>
                                     </select>
                                 </div>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="closeAddSightingOpenAddLocation()">
+                                    <i class="fas fa-plus-square"></i> Add Location
+                                </button>
                                 <div class="form-group">
                                     <label for="reporterName" class="col-form-label">Your Name</label>
                                     <div class="">

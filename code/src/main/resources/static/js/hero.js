@@ -94,6 +94,16 @@ function openOrganizationModal(id) {
         }
     })
 }
+function openAddLocation() {
+    $('#addLocation').modal("show");
+}
+function closeAddSightingOpenAddLocation() {
+    $('#addSighting').modal("hide");
+    openAddLocation();
+}
+function openAddSuper() {
+    $("addSighting").modal("show");
+}
 function form_submit() {
     document.getElementById("add-location-form").submit();
 }

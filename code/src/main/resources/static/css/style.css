@@ -51,7 +51,12 @@ font-family: 'Anton', sans-serif;*/
     width: 480px;
     padding-right: 2px;
 }
-
+a {
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
 
 #address td {
     font-size: 10pt;

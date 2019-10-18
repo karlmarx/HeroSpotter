@@ -50,9 +50,9 @@
                 <td><span th:each="organization:${super.organizations}"><span th:text="${organization.name}"/><br></span></td>
                 <td><span th:each="power:${super.powers}"><span th:text="${power.name}"/><br></span></td>
                 <td th:text="${super.description}">Description</td>
-                <td><a href="#" th:onclick="'javascript:openSuperModal(\'' + ${super.id} + '\');'"><i class="d-flex justify-content-center fas fa-info-circle"></i></a></td>
-                <td><a href="#" th:href="@{editSuper(id=${super.id})}"><i class="d-flex justify-content-center fas fa-edit"></i></a></td>
-                <td><a href="#" th:href="@{deleteSuper(id=${super.id})}"><i class="d-flex justify-content-center fas fa-minus-square"></i></a></td>
+                <td><a href="#" th:onclick="'javascript:openSuperModal(\'' + ${super.id} + '\');'"><i class="d-flex justify-content-center fas fa-info-circle fa-2x"></i></a></td>
+                <td><a href="#" th:href="@{editSuper(id=${super.id})}"><i class="d-flex justify-content-center fas fa-edit fa-2x"></i></a></td>
+                <td><a href="#" th:href="@{deleteSuper(id=${super.id})}"><i class="d-flex justify-content-center fas fa-minus-square fa-2x"></i></a></td>
 
             </tr>
 
@@ -82,87 +82,7 @@
 
 
 <!-- Modal content-->
-<div id="addSuper" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
 
-            <div class="modal-header">
-                <h3 class="modal-title">Add a Super</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form type="form" action="/addSuper" method="POST">
-
-                        <div class="form-group row">
-                            <label class="col-form-label col-3" for="name">Supername</label>
-                            <div class="col-9">
-                                 <input type="text" class="form-control col-9" id="name" name="name"/>
-                            </div>
-                        </div>
-
-
-                    <div class="form-group row">
-                        <label for="organizations" class="col-3 col-form-label">
-                            Organizations</label>
-                        <div class="col-9">
-                            <select multiple id="organizations" name="organizationId"
-                                    class="form-control" >
-<!--                                <option th:each="organization:${organizations}"-->
-<!--                                        th:value="${organization.id}"-->
-<!--                                        th:text="${organization.name}">-->
-<!--                                    Organizations Name</option>-->
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="powers" class="col-3 col-form-label">
-                            Powers</label>
-                        <div class="col-9">
-                            <select multiple id="powers" name="powerId"
-                                    class="form-control" >
-                                <option th:each="power:${powers}"
-                                        th:value="${power.id}"
-                                        th:text="${power.name}">
-                                    Powers Name</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="description" class="col-3 col-form-label">
-                            Description</label>
-                        <div class="col-9">
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-3"></div>
-                        <div class="custom-control custom-checkbox col-9">
-
-
-                            <label class="custom-control-label col-form-label"  for="isVillain" >Check if Villain</label>
-                            <input type="checkbox" class="custom-control-input form-control" id="isVillain" name="isVillain"/>
-                        </div>
-                    </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary ">Add Super</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-
-                    </form>
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-    </div>
-</div>
 
 <!-- Replace the value of the key parameter with your own API key. -->
 

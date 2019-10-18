@@ -56,6 +56,8 @@ public class MVCController {
     @PostMapping("/addLocation")
     public String addLocation(Location location, HttpServletRequest request) {
         location.setPlaceId(request.getParameter("placeID"));
+        location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
+        location.setLongitude(Double.parseDouble(request.getParameter("longitude")));
         location = service.censorAndFillLocation(location);
         locations.save(location);
         return "redirect:/locations";
@@ -248,6 +250,7 @@ public class MVCController {
         } else {
             super_.setVillain(false);
         }
+        super_.setName(request.getParameter("super-name"));
         super_ = service.censorAndFillSuper(super_);
         supers.save(super_);
         return "redirect:/supers";
@@ -259,9 +262,28 @@ public class MVCController {
         Super super_ = supers.findById(id).orElse(null);
         model.addAttribute("super", super_);
         List<Power> powerList = powers.findAll();
-        model.addAttribute("powers", powerList);
+        List<Power> powersCurrent = powers.findBySuperMembers(super_);
+        List<Power> powersNotHad = new ArrayList<>();
+        for (Power pow: powerList) {
+            if (!powersCurrent.contains(pow)) {
+                powersNotHad.add(pow);
+            }
+        }
+        model.addAttribute("powerscurrent", powersCurrent);
+        model.addAttribute("powersmissing", powersNotHad);
+//        model.addAttribute("powers", powerList);
         List<Organization> organizationList = orgs.findAll();
-        model.addAttribute("organizations", organizationList);
+
+//        model.addAttribute("organizations", organizationList);
+        List<Organization> orgsCurrent = orgs.findBySuperMembers(super_);
+        List<Organization> orgsNotIn = new ArrayList<>();
+        for (Organization org : organizationList) {
+            if (!orgsCurrent.contains(org)) {
+                orgsNotIn.add(org);
+            }
+        }
+        model.addAttribute("orgscurrent", orgsCurrent);
+        model.addAttribute("orgsnotin", orgsNotIn);
         return "editSuper";
     }
 
@@ -309,6 +331,9 @@ public class MVCController {
         model.addAttribute("locations", locationList);
         List<Sighting> sightingList = sightings.findAll();
         model.addAttribute("sightings", sightingList);
+
+        List<Power> powerList = powers.findAll();
+        model.addAttribute("powers", powerList);
         return "sightings";
     }
     @RequestMapping("/sighting/{id}")

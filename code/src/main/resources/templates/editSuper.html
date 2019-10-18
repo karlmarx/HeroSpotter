@@ -37,9 +37,12 @@
                             <div class="col-9">
                                 <select multiple id="organizations" name="organizationId"
                                         class="form-control" >
-                                    <option th:each="organization:${organizations}"
-                                            th:value="${organization.id}"
-                                            th:text="${organization.name}">
+                                    <option th:each="orgcurrent:${orgscurrent}"
+                                            th:value="${orgcurrent.id}"
+                                            th:text="${orgcurrent.name}" selected>OrgName</option>
+                                    <option th:each="orgnotin:${orgsnotin}"
+                                            th:value="${orgnotin.id}"
+                                            th:text="${orgnotin.name}" >
                                         Organizations Name</option>
                                 </select>
                             </div>
@@ -51,7 +54,11 @@
                             <div class="col-9">
                                 <select multiple id="powers" name="powerId"
                                         class="form-control" >
-                                    <option th:each="power:${powers}"
+                                    <option th:each="power:${powerscurrent}"
+                                            th:value="${power.id}"
+                                            th:text="${power.name}" selected>
+                                        Powers Name</option>
+                                    <option th:each="power:${powerscurrent}"
                                             th:value="${power.id}"
                                             th:text="${power.name}">
                                         Powers Name</option>

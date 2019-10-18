@@ -124,6 +124,17 @@ public class ServiceImpl implements ServiceLayer {
         } else {
             location.setName(censorString(location.getName()));
         }
+        if (location.getLatitude() == 0d) {
+location.setLatitude(32.0853d);
+
+        }
+        if (location.getLatitude() == 0d) {
+location.setLongitude(34.7818d);
+        }
+        if (location.getAddress().equals("")) {
+            location.setLatitude(32.0853d);
+            location.setLatitude(32.0853d);
+        }
         return location;
     }
     private List<String> getCurseList(){

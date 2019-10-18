@@ -101,8 +101,12 @@ function closeAddSightingOpenAddLocation() {
     $('#addSighting').modal("hide");
     openAddLocation();
 }
+function closeAddSightingOpenAddSuper () {
+    $('#addSighting').modal("hide");
+    openAddSuper();
+}
 function openAddSuper() {
-    $("addSighting").modal("show");
+    $("#addSuper").modal("show");
 }
 function form_submit() {
     document.getElementById("add-location-form").submit();

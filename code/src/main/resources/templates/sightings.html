@@ -89,7 +89,7 @@
                                 <div class="form-group ">
                                     <label for="date" class="col-form-label">Date</label>
                                     <div class="">
-                                        <input class="form-control" type="date" value="2011-08-19" id="date" name="date">
+                                        <input class="form-control" type="date" value="2019-10-26" id="date" name="date">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -98,10 +98,9 @@
                                         <option th:each="super : ${supers}"
                                                 th:value="${super.id}"
                                                 th:text="${super.name}" >Superperson</option>
-                                        <option><a href="#" th:onclick="openAddSuper()">Add New SuperPerson</a> </option>
                                     </select>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addSuper"><i class="fas fa-plus-square"></i> Add New Super</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="closeAddSightingOpenAddSuper()"><i class="fas fa-plus-square"></i> Add New Super</button>
                                 <div class="form-group">
                                     <label for="location" class="col-form-label">Location</label>
                                     <select class="form-control" id="location" name="location">
@@ -147,41 +146,41 @@
     <!-- Replace the value of the key parameter with your own API key. -->
 
 
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        var locations = [[${locations}]];
-        /*]]>*/
-        function initMap() {
+<!--    <script th:inline="javascript">-->
+<!--        /*<![CDATA[*/-->
+<!--        var locations = [[${locations}]];-->
+<!--        /*]]>*/-->
+<!--        function initMap() {-->
 
-            var myLatLng = {lat: 0, lng: 0};
+<!--            var myLatLng = {lat: 0, lng: 0};-->
 
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
-                center: myLatLng
-            });
-            for  (var i = 0; i <locations.length; i++ ) {
-                var l = new google.maps.LatLng(locations[i].latitude, locations[i].longitude);
-                var marker = new google.maps.Marker({
-                    position: l,
-                    map: map,
-                    animation: google.maps.Animation.DROP,
-                    title: locations[i].name
+<!--            var map = new google.maps.Map(document.getElementById('map'), {-->
+<!--                zoom: 4,-->
+<!--                center: myLatLng-->
+<!--            });-->
+<!--            for  (var i = 0; i <locations.length; i++ ) {-->
+<!--                var l = new google.maps.LatLng(locations[i].latitude, locations[i].longitude);-->
+<!--                var marker = new google.maps.Marker({-->
+<!--                    position: l,-->
+<!--                    map: map,-->
+<!--                    animation: google.maps.Animation.DROP,-->
+<!--                    title: locations[i].name-->
 
-                });
+<!--                });-->
 
-            }
+<!--            }-->
 
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'Hello World!'
+<!--            var marker = new google.maps.Marker({-->
+<!--                position: myLatLng,-->
+<!--                map: map,-->
+<!--                title: 'Hello World!'-->
 
-            });
+<!--            });-->
 
 
-        }
+<!--        }-->
 
-    </script>
+<!--    </script>-->
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB66tFLS3_WbOT1Eln1Pi7LT6dN68L-xSc&callback=initMap">
     </script>
@@ -194,7 +193,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 
-
+<div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>
 <div th:replace="fragments/stylingFragment.html :: includes"></div>
 
 

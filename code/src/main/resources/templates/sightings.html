@@ -24,7 +24,44 @@
 
 <body>
 <div th:replace="fragments/stylingFragment.html:: navbar"></div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var sightings = [[${sightings}]];
+    /*]]>*/
+    function initMap() {
 
+        var myLatLng = {lat: 20, lng: 10};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 2,
+            center: myLatLng
+        });
+        for (var i = 0; i < sightings.length; i++) {
+            var l = new google.maps.LatLng(sightings[i].location.latitude, sightings[i].location.longitude);
+            var marker = new google.maps.Marker({
+                position: l,
+                map: map,
+                animation: google.maps.Animation.DROP
+            });
+            var content ="<a href='#' onclick=\'openSightingModal(" + sightings[i].id + "\);'>" +
+                "<h3>" + sightings[i].superPerson.name + "@" + sightings[i].location.name +  "</h3>"
+                + "<div>" + "Address: " + sightings[i].location.address + "</div>"
+                + "<div>" + "Date: " + sightings[i].date + "</div>";
+
+
+            var infowindow = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                return function() {
+                    infowindow.setContent(content);
+                    infowindow.open(map,marker);
+                };
+            })(marker,content,infowindow));
+
+        }
+    }
+
+</script>
 <div id="map"></div><br>
 
 <main role="main" class="container">
@@ -148,44 +185,7 @@
 </main>
 
 
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var sightings = [[${sightings}]];
-    /*]]>*/
-    function initMap() {
 
-        var myLatLng = {lat: 20, lng: 10};
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 2,
-            center: myLatLng
-        });
-        for (var i = 0; i < sightings.length; i++) {
-            var l = new google.maps.LatLng(sightings[i].location.latitude, sightings[i].location.longitude);
-            var marker = new google.maps.Marker({
-                position: l,
-                map: map,
-                animation: google.maps.Animation.DROP
-            });
-            var content ="<a href='#' onclick=\'openSightingModal(" + sightings[i].id + "\);'>" +
-                "<h3>" + sightings[i].superPerson.name + "@" + sightings[i].location.name +  "</h3>"
-                + "<div>" + "Address: " + sightings[i].location.address + "</div>"
-                + "<div>" + "Date: " + sightings[i].date + "</div>";
-
-
-            var infowindow = new google.maps.InfoWindow();
-
-            google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
-                return function() {
-                    infowindow.setContent(content);
-                    infowindow.open(map,marker);
-                };
-            })(marker,content,infowindow));
-
-        }
-    }
-
-</script>
 
 
 

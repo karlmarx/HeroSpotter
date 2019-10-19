@@ -111,71 +111,120 @@ function openAddSuper() {
 function form_submit() {
     document.getElementById("add-location-form").submit();
 }
-var placeSearch, autocomplete, place;
 
-var componentForm = {
-    street_number: 'short_name',
-    route: 'long_name',
-    locality: 'long_name',
-    administrative_area_level_1: 'short_name',
-    country: 'long_name',
-    postal_code: 'short_name'
+function confirm(heading, question, cancelButtonTxt, okButtonTxt, callback) {
+
+    var confirmModal =
+        $('<div class="modal hide fade">' +
+            '<div class="modal-header">' +
+            '<a class="close" data-dismiss="modal" >&times;</a>' +
+            '<h3>' + heading +'</h3>' +
+            '</div>' +
+
+            '<div class="modal-body">' +
+            '<p>' + question + '</p>' +
+            '</div>' +
+
+            '<div class="modal-footer">' +
+            '<a href="#" class="btn" data-dismiss="modal">' +
+            cancelButtonTxt +
+            '</a>' +
+            '<a href="#" id="okButton" class="btn btn-primary">' +
+            okButtonTxt +
+            '</a>' +
+            '</div>' +
+            '</div>');
+
+    confirmModal.find('#okButton').click(function(event) {
+        callback();
+        confirmModal.modal('hide');
+    });
+
+    confirmModal.modal('show');
 };
 
-function initAutocomplete() {
-    // Create the autocomplete object, restricting the search predictions to
-    // geographical location types.
-    autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById('autocomplete'), {types: ['geocode']});
+$("i#deleteTransaction").live("click", function(event) {
+    // get txn id from current table row
+    var id = $(this).data('id');
 
-    // Avoid paying for data that you don't need by restricting the set of
-    // place fields that are returned to just the address components.
-    autocomplete.setFields(['address_component', 'place_id', 'geometry']);
+    var heading = 'Confirm Transaction Delete';
+    var question = 'Please confirm that you wish to delete transaction ' + id + '.';
+    var cancelButtonTxt = 'Cancel';
+    var okButtonTxt = 'Confirm';
 
-    // When the user selects an address from the drop-down, populate the
-    // address fields in the form.
-    autocomplete.addListener('place_changed', fillInAddress);
-}
+    var callback = function() {
+        alert('delete confirmed ' + id);
+    };
 
-function fillInAddress() {
-    // Get the place details from the autocomplete object.
-    place = autocomplete.getPlace();
-    document.getElementById('placeID').value = place.place_id;
-    document.getElementById('latitude').value =  place.geometry.location.lat();
-    document.getElementById('longitude').value =  place.geometry.location.lng();
+    confirm(heading, question, cancelButtonTxt, okButtonTxt, callback);
 
+});
 
-
-    for (var component in componentForm) {
-        document.getElementById(component).value = '';
-        document.getElementById(component).disabled = false;
-    }
-
-    // Get each component of the address from the place details,
-    // and then fill-in the corresponding field on the form.
-    for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
-        if (componentForm[addressType]) {
-            var val = place.address_components[i][componentForm[addressType]];
-            document.getElementById(addressType).value = val;
-        }
-    }
-}
-// Bias the autocomplete object to the user's geographical location,
-// as supplied by the browser's 'navigator.geolocation' object.
-function geolocate() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var geolocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            var circle = new google.maps.Circle(
-                {center: geolocation, radius: position.coords.accuracy});
-            autocomplete.setBounds(circle.getBounds());
-        });
-    }
-}
+// var placeSearch, autocomplete, place;
+//
+// var componentForm = {
+//     street_number: 'short_name',
+//     route: 'long_name',
+//     locality: 'long_name',
+//     administrative_area_level_1: 'short_name',
+//     country: 'long_name',
+//     postal_code: 'short_name'
+// };
+//
+// function initAutocomplete() {
+//     // Create the autocomplete object, restricting the search predictions to
+//     // geographical location types.
+//     autocomplete = new google.maps.places.Autocomplete(
+//         document.getElementById('autocomplete'), {types: ['geocode']});
+//
+//     // Avoid paying for data that you don't need by restricting the set of
+//     // place fields that are returned to just the address components.
+//     autocomplete.setFields(['address_component', 'place_id', 'geometry']);
+//
+//     // When the user selects an address from the drop-down, populate the
+//     // address fields in the form.
+//     autocomplete.addListener('place_changed', fillInAddress);
+// }
+//
+// function fillInAddress() {
+//     // Get the place details from the autocomplete object.
+//     place = autocomplete.getPlace();
+//     document.getElementById('placeID').value = place.place_id;
+//     document.getElementById('latitude').value =  place.geometry.location.lat();
+//     document.getElementById('longitude').value =  place.geometry.location.lng();
+//
+//
+//
+//     for (var component in componentForm) {
+//         document.getElementById(component).value = '';
+//         document.getElementById(component).disabled = false;
+//     }
+//
+//     // Get each component of the address from the place details,
+//     // and then fill-in the corresponding field on the form.
+//     for (var i = 0; i < place.address_components.length; i++) {
+//         var addressType = place.address_components[i].types[0];
+//         if (componentForm[addressType]) {
+//             var val = place.address_components[i][componentForm[addressType]];
+//             document.getElementById(addressType).value = val;
+//         }
+//     }
+// }
+// // Bias the autocomplete object to the user's geographical location,
+// // as supplied by the browser's 'navigator.geolocation' object.
+// function geolocate() {
+//     if (navigator.geolocation) {
+//         navigator.geolocation.getCurrentPosition(function(position) {
+//             var geolocation = {
+//                 lat: position.coords.latitude,
+//                 lng: position.coords.longitude
+//             };
+//             var circle = new google.maps.Circle(
+//                 {center: geolocation, radius: position.coords.accuracy});
+//             autocomplete.setBounds(circle.getBounds());
+//         });
+//     }
+// }
 // function initMap() {
 //     var myLatLng = {lat: -25.363, lng: 131.044};
 //

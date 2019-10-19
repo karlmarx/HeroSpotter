@@ -21,6 +21,44 @@
     </style>
 
 </head>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var organizations = [[${organizations}]];
+    /*]]>*/
+    function initMap() {
+
+        var myLatLng = {lat: 20, lng: 10};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 2,
+            center: myLatLng
+        });
+        for (var i = 0; i < organizations.length; i++) {
+            var l = new google.maps.LatLng(organizations[i].latitude, organizations[i].longitude);
+            var marker = new google.maps.Marker({
+                position: l,
+                map: map,
+                animation: google.maps.Animation.DROP
+            });
+            var content ="<a href='#' onclick=\'openOrganizationModal(" + organizations[i].id + "\);'>" +
+                "<h3>" + organizations[i].name + "</h3>"
+                + "<div>" + "Address: " + organizations[i].address + "</div>"
+                + "<div>" + "Email: " + organizations[i].email + "</div>"
+                + "<div>" +  organizations[i].description + "</div>";
+
+            var infowindow = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                return function() {
+                    infowindow.setContent(content);
+                    infowindow.open(map,marker);
+                };
+            })(marker,content,infowindow));
+
+        }
+    }
+
+</script>
 
 <body>
 <div th:replace="fragments/stylingFragment.html:: navbar"></div>
@@ -172,97 +210,10 @@
 
     </div>
 </main>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var organizations = [[${organizations}]];
-    /*]]>*/
-    function initMap() {
 
-        var myLatLng = {lat: 20, lng: 10};
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 2,
-            center: myLatLng
-        });
-        for (var i = 0; i < organizations.length; i++) {
-            var l = new google.maps.LatLng(organizations[i].latitude, organizations[i].longitude);
-            var marker = new google.maps.Marker({
-                position: l,
-                map: map,
-                animation: google.maps.Animation.DROP
-            });
-            var content ="<a href='#' onclick=\'openOrganizationModal(" + organizations[i].id + "\);'>" +
-                "<h3>" + organizations[i].name + "</h3>"
-                + "<div>" + "Address: " + organizations[i].address + "</div>"
-                + "<div>" + "Email: " + organizations[i].email + "</div>"
-                + "<div>" +  organizations[i].description + "</div>";
-
-            var infowindow = new google.maps.InfoWindow();
-
-            google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
-                return function() {
-                    infowindow.setContent(content);
-                    infowindow.open(map,marker);
-                };
-            })(marker,content,infowindow));
-
-        }
-    }
-
-</script>
-
-<div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>
 <div th:replace="fragments/stylingFragment.html :: includes"></div>
-<script async defer
-
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB66tFLS3_WbOT1Eln1Pi7LT6dN68L-xSc&callback=initMap"></script>
-</div>
-
-<!-- Replace the value of the key parameter with your own API key. -->
-
-<!--<div th:replace="fragments/stylingFragment.html :: googleAuto"></div>-->
-<!--<div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>-->
-
-<!-- /.container -->
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-
-
-
-<!--<script th:inline="javascript">-->
-<!--    /*<![CDATA[*/-->
-<!--    var orgs = [[${organizations}]];-->
-<!--    /*]]>*/-->
-<!--    function initMap() {-->
-
-<!--        var myLatLng = {lat: 0, lng: 0};-->
-
-<!--        var map = new google.maps.Map(document.getElementById('map'), {-->
-<!--            zoom: 4,-->
-<!--            center: myLatLng-->
-<!--        });-->
-<!--        for  (var i = 0; i <organizations.length; i++ ) {-->
-<!--            var l = new google.maps.LatLng(orgs[i].latitude, orgs[i].longitude);-->
-<!--            var marker = new google.maps.Marker({-->
-<!--                position: l,-->
-<!--                map: map-->
-<!--            });-->
-<!--        }-->
-
-<!--        var marker = new google.maps.Marker({-->
-<!--            position: myLatLng,-->
-<!--            map: map,-->
-<!--            title: 'Hello World!'-->
-<!--        });-->
-<!--    }-->
-
-<!--</script>-->
-<!--<script async defer-->
-<!--        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB66tFLS3_WbOT1Eln1Pi7LT6dN68L-xSc&callback=initMap"></script>-->
-
+<div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>
 
 
 

@@ -23,6 +23,44 @@
 
 <body>
 <div th:replace="fragments/stylingFragment.html:: navbar"></div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var locations = [[${locations}]];
+    /*]]>*/
+    function initMap() {
+
+        var myLatLng = {lat: 20, lng: 10};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 2,
+            center: myLatLng
+        });
+        for (var i = 0; i < locations.length; i++) {
+            var l = new google.maps.LatLng(locations[i].latitude, locations[i].longitude);
+            var marker = new google.maps.Marker({
+                position: l,
+                map: map,
+                animation: google.maps.Animation.DROP
+            });
+            var content = "<a href='#' onclick=\'openLocationModal(" + locations[i].id + "\);'>" +
+                "<h3>" + locations[i].name + "</h3>"
+                + "<div>" + "Address: " + locations[i].address + "</div>";
+            var infowindow = new google.maps.InfoWindow();
+            // var infowindow = new google.maps.InfoWindow({
+            //     content: locations[i].name
+            // });
+            google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                return function() {
+                    infowindow.setContent(content);
+                    infowindow.open(map,marker);
+                };
+            })(marker,content,infowindow));
+
+        }
+    }
+
+</script>
+
 <div id="map" ></div>
 
 <main role="main" class="container">
@@ -49,9 +87,32 @@
                 <td th:text="${location.name}">Name</td>
                 <td th:text="${location.address}">Address</td>
                 <td ><a href="#" th:onclick="'javascript:openLocationModal(\'' + ${location.id} + '\');'"><i class=" d-flex justify-content-center fas fa-info-circle  fa-2x"></i></a></td>
-                <td ><a href="#" th:href="@{editLocation(id=${location.id})}"><i class="d-flex justify-content-center fas fa-edit fa-2x"></i></a></td>
+                <td > <a href="#" th:href="@{editLocation(id=${location.id})}"> <i class="d-flex justify-content-center fas fa-edit fa-2x"></i></a></td>
 
-                <td ><a href="#" th:href="@{deleteLocation(id=${location.id})}"><i class="d-flex justify-content-center fas fa-minus-square fa-2x"></i></a></td>
+                <td ><a  href="#confirmDelete" class="trigger-btn" data-toggle="modal"><i class="d-flex justify-content-center fas fa-minus-square fa-2x"></i></a><br>
+                    <div id="confirmDelete" class="modal fade">
+                        <div class="modal-dialog modal-confirm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="icon-box">
+                                        <i class="material-icons">&#xE5CD;</i>
+                                    </div>
+                                    <h4 class="modal-title">Are you sure?</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Do you really want to delete  [<span th:text="${location.name}">Name</span>]? This process cannot be undone.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                                    <a href="#" th:href="@{deleteLocation(id=${location.id})}"> <button type="button" class="btn btn-danger">Delete</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> </td>
+                <!-- Modal HTML -->
+
+
             </tr>
 
             </tbody>
@@ -76,43 +137,6 @@
 </main>
 
 <!-- Replace the value of the key parameter with your own API key. -->
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var locations = [[${locations}]];
-    /*]]>*/
-    function initMap() {
-
-        var myLatLng = {lat: 20, lng: 10};
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 2,
-            center: myLatLng
-        });
-        for (var i = 0; i < locations.length; i++) {
-            var l = new google.maps.LatLng(locations[i].latitude, locations[i].longitude);
-            var marker = new google.maps.Marker({
-                position: l,
-                map: map,
-                animation: google.maps.Animation.DROP
-            });
-            var content = "<a href='#' onclick=\'openLocationModal(" + locations[i].id + "\);'>" +
-                "<h3>" + locations[i].name + "</h3>"
-                + "<div>" + "Address: " + locations[i].address + "</div>";
-var infowindow = new google.maps.InfoWindow();
-            // var infowindow = new google.maps.InfoWindow({
-            //     content: locations[i].name
-            // });
-            google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
-                return function() {
-                    infowindow.setContent(content);
-                    infowindow.open(map,marker);
-                };
-            })(marker,content,infowindow));
-
-        }
-    }
-
-</script>
 
 
 
@@ -166,12 +190,13 @@ var infowindow = new google.maps.InfoWindow();
 
 <!--<div th:replace="fragments/stylingFragment.html :: googleAuto"></div>-->
 <!--&lt;!&ndash;<div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>&ndash;&gt;-->
-<div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>
 <div th:replace="fragments/stylingFragment.html :: includes"></div>
-<script async defer
+<div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>
 
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB66tFLS3_WbOT1Eln1Pi7LT6dN68L-xSc&callback=initMap"></script>
-</div>
+<!--<script async defer-->
+
+<!--        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB66tFLS3_WbOT1Eln1Pi7LT6dN68L-xSc&callback=initMap"></script>-->
+<!--</div>-->
 
 </body>
 </html>

@@ -21,7 +21,7 @@ public class Super  {
     String description;
     @Column(name="is_villain")
     boolean isVillain;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
             @JoinTable(name="supers_powers",
             joinColumns = {@JoinColumn(name="super_id")},
             inverseJoinColumns = {@JoinColumn(name="power_id")})

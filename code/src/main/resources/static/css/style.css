@@ -102,6 +102,8 @@ font-family: 'Anton', sans-serif;*/
     color: #f15e5e;
     font-size: 46px;
     display: inline-block;
+    text-align: center;
+
     margin-top: 13px;
 }
 .modal-confirm .btn {

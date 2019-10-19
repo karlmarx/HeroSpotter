@@ -202,7 +202,12 @@ public class MVCController {
 
     @GetMapping("/deletePower")
     public String deletePower(Integer id) {
-        powers.deleteById(id);
+        List<Super> supersWithPower = supers.findByPowersContains(powers.findById(id).orElse(null));
+        for (Super each : supersWithPower) {
+           each.getPowers().remove(powers.findById(id).orElse(null));
+        }
+        supers.saveAll(supersWithPower);
+            powers.deleteById(id);
         return "redirect:/powers";
     }
 

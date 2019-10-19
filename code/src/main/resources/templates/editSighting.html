@@ -63,7 +63,6 @@
                                     <option th:each="super : ${supers}"
                                             th:value="${super.id}"
                                             th:text="${super.name}" th:selected="${sighting.superPerson.name}">Superperson</option>
-    <!-- try to default to current or do a toggle edit-->
                                     <option><a href="/supers">Add New SuperPerson</a></option>
                                 </select>
                             </div>

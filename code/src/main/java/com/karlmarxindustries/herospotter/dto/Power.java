@@ -16,8 +16,8 @@ public class Power {
     String description;
     @Column(name="is_unique")
     boolean isUnique;
-    @ManyToMany(mappedBy="powers", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
+    @ManyToMany( mappedBy="powers"    )
     private List<Super> superMembers;
 
     public Power(String name, String description, boolean isUnique) {

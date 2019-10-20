@@ -238,7 +238,7 @@ public class MVCController {
     }
     @PostMapping("/addSuper")
     public String addSuper(Super super_, HttpServletRequest request) {
-        String[] powerIds = request.getParameterValues("powerId");
+        String[] powerIds = request.getParameterValues("addPowerId");
         String[] organizationIds = request.getParameterValues("organizationId");
         List<Organization> orgList = new ArrayList<>();
         for (String orgID : organizationIds) {

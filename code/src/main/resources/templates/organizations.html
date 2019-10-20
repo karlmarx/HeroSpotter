@@ -88,7 +88,34 @@
                 <td th:text="${organization.phoneNumber}">Address</td>
                 <td><a href="#" th:onclick="'javascript:openOrganizationModal(\'' + ${organization.id} + '\');'"><i class="fas fa-info-circle d-flex justify-content-center  fa-2x"></i></a></td>
                 <td><a href="#" th:href="@{editOrganization(id=${organization.id})}"><i class="fas fa-edit d-flex justify-content-center  fa-2x"></i></a></td>
-                <td><a href="#" th:href="@{deleteOrganization(id=${organization.id})}"><i class="fas fa-minus-square d-flex justify-content-center  fa-2x"></i></a></td>
+                <td ><a  th:href="'#confirmDelete' + ${organization.id}" class="trigger-btn" data-toggle="modal"><i class="d-flex justify-content-center fas fa-minus-square fa-2x"></i></a><br>
+                    <div th:id="'confirmDelete' + ${organization.id}" class="modal fade" style="font-family: 'Varela Round', sans-serif;">
+                        <div class="modal-dialog modal-confirm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="icon-box">
+                                        <i class="material-icons" style="text-align: center;">&#xE5CD;</i>
+                                    </div>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div><h2 class="modal-title">Are you sure?</h2></div>
+
+                                    <p>Do you really want to delete  <span th:text="${organization.name}" style="color:black; font-weight: bolder; font-size: 120%;">Name</span>? This process cannot be undone.</p>
+
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-info " data-dismiss="modal">Cancel</button>
+                                        <a href="#" th:href="@{deleteLocation(id=${organization.id})}"> <button type="button" class="btn btn-danger ">Delete</button></a> </div>
+                                </div> </div>
+                            <div class="modal-footer">
+
+
+                            </div>
+                        </div>
+                    </div>
+                </td>
             </tr>
 
             </tbody>
@@ -108,6 +135,105 @@
 
     </div>
 
+    <div id="addOrganization" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Add an Organization</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form type="form" action="addOrganization" method="POST">
+
+                        <div class="form-row form-group">
+                            <label class="col-md-3" for="name">Organization Name</label>
+                            <input type="text" class="col-md-9 form-control" id="name" name="name"/>
+                        </div>
+                        <br>
+                        <div id="locationField" class=" form-row form-group">
+                            <label class="col-md-3" for="autocomplete">Street Address</label>
+                            <input id="autocomplete"
+                                   name="address"
+
+                                   class="col-md-9 form-control"
+                                   placeholder="enter address and select from list"
+                                   onFocus="geolocate()"
+                                   type="text"/>
+                        </div><br>
+
+
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label for="street_number">No.</label>
+                                <input class="field form-control" id="street_number" disabled="true" readonly/>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <label for="route" >Street</label>
+                                <input class="field form-control" id="route" disabled="true" readonly/>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="locality">City</label>
+                                <input class="field form-control" type="text" id="locality" disabled="true" readonly/>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="administrative_area_level_1">State</label>
+                                <input class="field form-control" type="text" id="administrative_area_level_1" disabled="true" readonly/>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="postal_code">Zip</label>
+                                <input class="field form-control" type="text" id="postal_code" disabled="true" readonly/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input class="field form-control" type="text" id="country" disabled="true" readonly/>
+                        </div>
+                        <div class="form-group row">
+                                            <label class="col-3 col-form-label" for="email">Email</label>
+                            <div class="col-9"><input type="email" class=" form-control" id="email" name="email"/></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-3 col-form-label" for="url">Website</label>
+                                            <div class="col-9"><input type="url" class=" form-control" id="url" name="url"/></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-3 col-form-label" for="phoneNumber">Phone Number</label>
+                                            <div class="col-9"><input type="tel" class=" form-control" id="phoneNumber" name="phoneNumber"/></div>
+                                        </div>
+                        <div class="form-group row">
+                            <label for="description" class="col-3 col-form-label">
+                                Description</label>
+                            <div class="col-9">
+                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" id="placeID" name="placeID" />
+                        <input type="hidden" id="latitude" name="latitude" />
+                        <input type="hidden" id="longitude" name="longitude" />
+
+
+
+
+
+
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" >Add Organization</button>
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
 
 </main>
 

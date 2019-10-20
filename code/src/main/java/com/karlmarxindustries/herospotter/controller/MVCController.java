@@ -32,6 +32,17 @@ public class MVCController {
     @Autowired
     ServiceImpl service;
 
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @RequestMapping("/login-error")
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "login";
+    }
+
     @GetMapping("/")
     public String displayTop10(Model model) {
         List<Sighting> lastTenSightings = sightings.findFirst10ByOrderByIdDesc();

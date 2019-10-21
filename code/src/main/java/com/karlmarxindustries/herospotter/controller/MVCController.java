@@ -250,14 +250,18 @@ public class MVCController {
     @PostMapping("/addSuper")
     public String addSuper(Super super_, HttpServletRequest request) {
         String[] powerIds = request.getParameterValues("addPowerId");
-        String[] organizationIds = request.getParameterValues("organizationId");
+        String[] organizationIds = request.getParameterValues("addOrgId");
         List<Organization> orgList = new ArrayList<>();
-        for (String orgID : organizationIds) {
-            orgList.add(orgs.findById(Integer.parseInt(orgID)).orElse(null));
+        if (null!=organizationIds && organizationIds.length>0) {
+            for (String orgID : organizationIds) {
+                orgList.add(orgs.findById(Integer.parseInt(orgID)).orElse(null));
+            }
         }
         List<Power> powerList = new ArrayList<>();
-        for (String powerId : powerIds) {
-            powerList.add(powers.findById(Integer.parseInt(powerId)).orElse(null));
+        if (null!=powerIds && powerIds.length>0) {
+            for (String powerId : powerIds) {
+                powerList.add(powers.findById(Integer.parseInt(powerId)).orElse(null));
+            }
         }
         super_.setOrganizations(orgList);
         super_.setPowers(powerList);
@@ -318,12 +322,16 @@ public class MVCController {
         String[] powerIds = request.getParameterValues("powerId");
         String[] organizationIds = request.getParameterValues("organizationId");
         List<Organization> orgList = new ArrayList<>();
-        for (String orgID : organizationIds) {
-            orgList.add(orgs.findById(Integer.parseInt(orgID)).orElse(null));
+        if (null!=organizationIds && organizationIds.length>0) {
+            for (String orgID : organizationIds) {
+                orgList.add(orgs.findById(Integer.parseInt(orgID)).orElse(null));
+            }
         }
         List<Power> powerList = new ArrayList<>();
-        for (String powerId : powerIds) {
-            powerList.add(powers.findById(Integer.parseInt(powerId)).orElse(null));
+        if (null!=powerIds && powerIds.length>0) {
+            for (String powerId : powerIds) {
+                powerList.add(powers.findById(Integer.parseInt(powerId)).orElse(null));
+            }
         }
         super_.setOrganizations(orgList);
         super_.setPowers(powerList);

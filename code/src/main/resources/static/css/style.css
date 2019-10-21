@@ -89,6 +89,9 @@ font-family: 'Anton', sans-serif;*/
 .modal-confirm .modal-footer a {
     color: #999;
 }
+.modal {
+    overflow-y: auto !important;
+}
 .modal-confirm .icon-box {
     width: 80px;
     height: 80px;

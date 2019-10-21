@@ -42,7 +42,34 @@
                 <td th:text="${super.description}">Description</td>
                 <td><a href="#" th:onclick="'javascript:openSuperModal(\'' + ${super.id} + '\');'"><i class="d-flex justify-content-center fas fa-info-circle fa-2x"></i></a></td>
                 <td><a href="#" th:href="@{editSuper(id=${super.id})}"><i class="d-flex justify-content-center fas fa-edit fa-2x"></i></a></td>
-                <td><a href="#" th:href="@{deleteSuper(id=${super.id})}"><i class="d-flex justify-content-center fas fa-minus-square fa-2x"></i></a></td>
+                <td ><a  th:href="'#confirmDelete' + ${super.id}" class="trigger-btn" data-toggle="modal"><i class="d-flex justify-content-center fas fa-minus-square fa-2x"></i></a><br>
+                    <div th:id="'confirmDelete' + ${super.id}" class="modal fade" style="font-family: 'Varela Round', sans-serif;">
+                        <div class="modal-dialog modal-confirm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="icon-box">
+                                        <i class="material-icons" style="text-align: center;">&#xE5CD;</i>
+                                    </div>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div><h2 class="modal-title">Are you sure?</h2></div>
+
+                                    <p>Do you really want to delete  <span th:text="${super.name}" style="color:black; font-weight: bolder; font-size: 120%;">Name</span>? This process cannot be undone.</p>
+
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-info " data-dismiss="modal">Cancel</button>
+                                        <a href="#" th:href="@{deleteSuper(id=${super.id})}"> <button type="button" class="btn btn-danger ">Delete</button></a> </div>
+                                </div> </div>
+                            <div class="modal-footer">
+
+
+                            </div>
+                        </div>
+                    </div>
+                </td>
 
             </tr>
 

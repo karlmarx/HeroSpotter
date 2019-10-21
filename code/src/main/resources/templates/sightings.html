@@ -89,7 +89,34 @@
                 <td th:text="${sighting.reporterName}">Reporter</td>
                 <td><a href="#" th:onclick="'javascript:openSightingModal(\'' + ${sighting.id} + '\');'"><i class="d-flex justify-content-center fas fa-info-circle fa-2x"></i></a></td>
                 <td><a href="#" th:href="@{editSighting(id=${sighting.id})}"><i class="d-flex justify-content-center fas fa-edit fa-2x"></i></a></td>
-                <td><a href="#" th:href="@{deleteSighting(id=${sighting.id})}"><i class="d-flex justify-content-center fas fa-minus-square fa-2x"></i></a></td>
+                <td ><a  th:href="'#confirmDelete' + ${sighting.id}" class="trigger-btn" data-toggle="modal"><i class="d-flex justify-content-center fas fa-minus-square fa-2x"></i></a><br>
+                    <div th:id="'confirmDelete' + ${sighting.id}" class="modal fade" style="font-family: 'Varela Round', sans-serif;">
+                        <div class="modal-dialog modal-confirm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="icon-box">
+                                        <i class="material-icons" style="text-align: center;">&#xE5CD;</i>
+                                    </div>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div><h2 class="modal-title">Are you sure?</h2></div>
+
+                                    <p>Do you really want to delete this sighting? This process cannot be undone.</p>
+
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-info " data-dismiss="modal">Cancel</button>
+                                        <a href="#" th:href="@{deleteSighting(id=${sighting.id})}"> <button type="button" class="btn btn-danger ">Delete</button></a> </div>
+                                </div> </div>
+                            <div class="modal-footer">
+
+
+                            </div>
+                        </div>
+                    </div>
+                </td>
             </tr>
 
             </tbody>
@@ -198,9 +225,8 @@
 
 
 <div th:replace="fragments/stylingFragment.html :: includes"></div>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB66tFLS3_WbOT1Eln1Pi7LT6dN68L-xSc&callback=initMap">
-</script>
+<div th:replace="fragments/stylingFragment.html :: autocompleteScript"></div>
+
 
 
 </body>

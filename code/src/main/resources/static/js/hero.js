@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+        if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+            $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+        }
+    });
     $('#sightings-table').DataTable( {
         destroy: true,
         paging: false,
@@ -99,6 +104,7 @@ function openAddLocation() {
 }
 function closeAddSightingOpenAddLocation() {
     $('#addSighting').modal("hide");
+
     openAddLocation();
 }
 function closeAddSightingOpenAddSuper () {
@@ -143,21 +149,5 @@ function confirm(heading, question, cancelButtonTxt, okButtonTxt, callback) {
     confirmModal.modal('show');
 };
 
-$("i#deleteTransaction").live("click", function(event) {
-    // get txn id from current table row
-    var id = $(this).data('id');
-
-    var heading = 'Confirm Transaction Delete';
-    var question = 'Please confirm that you wish to delete transaction ' + id + '.';
-    var cancelButtonTxt = 'Cancel';
-    var okButtonTxt = 'Confirm';
-
-    var callback = function() {
-        alert('delete confirmed ' + id);
-    };
-
-    confirm(heading, question, cancelButtonTxt, okButtonTxt, callback);
-
-});
 
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -248,7 +249,7 @@ public class MVCController {
 //        return "fragments/stylingFragment :: modalContents";
     }
     @PostMapping("/addSuper")
-    public String addSuper(Super super_, HttpServletRequest request) {
+    public String addSuper(Super super_, HttpServletRequest request, RedirectAttributes redirAttrs) {
         String[] powerIds = request.getParameterValues("addPowerId");
         String[] organizationIds = request.getParameterValues("addOrgId");
         List<Organization> orgList = new ArrayList<>();
@@ -273,6 +274,8 @@ public class MVCController {
         super_.setName(request.getParameter("super-name"));
         super_ = service.censorAndFillSuper(super_);
         supers.save(super_);
+        redirAttrs.addFlashAttribute("message", "Superhuman has been successfully added.");
+
         return "redirect:/supers";
     }
 
@@ -309,7 +312,7 @@ public class MVCController {
     }
 
     @PostMapping("/editSuper")
-    public String editSuperPartTwo(HttpServletRequest request) {
+    public String editSuperPartTwo(HttpServletRequest request, RedirectAttributes redirAttrs) {
         int id = Integer.parseInt(request.getParameter("id"));
         Super super_ = supers.findById(id).orElse(null);
         super_.setName(request.getParameter("name"));
@@ -337,14 +340,18 @@ public class MVCController {
         super_.setPowers(powerList);
         super_ = service.censorAndFillSuper(super_);
         supers.save(super_);
+        redirAttrs.addFlashAttribute("message", "Superhuman has been successfully edited.");
+
         return "redirect:/supers";
     }
 
     @GetMapping("/deleteSuper")
-    public String deleteSuper(Integer id) {
+    public String deleteSuper(Integer id, RedirectAttributes redirAttrs) {
         List<Sighting> sightingsBySuper = sightings.findBySuperPerson(supers.getOne(id));
         sightings.deleteAll(sightingsBySuper);
         supers.deleteById(id);
+        redirAttrs.addFlashAttribute("message", "Superhuman has been successfully deleted.");
+
         return "redirect:/supers";
     }
 
@@ -374,7 +381,7 @@ public class MVCController {
     }
 
     @PostMapping("/addSighting")
-    public String addSighting(Sighting sighting, HttpServletRequest request) {
+    public String addSighting(Sighting sighting, HttpServletRequest request, RedirectAttributes redirAttrs) {
         String superId = request.getParameter("super");
         String locationId = request.getParameter("location");
         LocalDate localDate = LocalDate.parse(request.getParameter("date"));
@@ -385,6 +392,8 @@ public class MVCController {
         sighting.setReporterName(request.getParameter("reporterName"));
         sighting = service.censorAndFillSighting(sighting);
         sightings.save(sighting);
+        redirAttrs.addFlashAttribute("message", "Sighting has been successfully added.");
+
         return "redirect:/sightings";
     }
     @GetMapping("/editSighting")
@@ -401,7 +410,7 @@ public class MVCController {
 
 
     @PostMapping("/editSighting")
-    public String editSightingPartTwo(HttpServletRequest request) {
+    public String editSightingPartTwo(HttpServletRequest request, RedirectAttributes redirAttrs) {
         int id = Integer.parseInt(request.getParameter("id"));
         Sighting sighting = sightings.findById(id).orElse(null);
         sighting.setDate(LocalDate.parse(request.getParameter("date")));
@@ -412,12 +421,16 @@ public class MVCController {
         sighting.setApproved(Boolean.parseBoolean(request.getParameter("approved")));
         sighting = service.censorAndFillSighting(sighting);
         sightings.save(sighting);
+        redirAttrs.addFlashAttribute("message", "Sighting has been successfully edited.");
+
         return "redirect:/sightings";
     }
 
     @GetMapping("/deleteSighting")
-    public String deleteSighting(Integer id) {
+    public String deleteSighting(Integer id, RedirectAttributes redirAttrs) {
         sightings.deleteById(id);
+        redirAttrs.addFlashAttribute("message", "Sighting has been successfully deleted.");
+
         return "redirect:/sightings";
     }
 

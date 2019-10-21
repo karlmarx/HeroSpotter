@@ -11,6 +11,7 @@
 <div th:replace="fragments/stylingFragment.html:: navbar"></div>
 <h1 class="display-2 " align="center" style="font-weight: 500;"> Superhumans   <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addSuper"><i class="fas fa-plus-square"></i> Add Superhuman</button>
 </h1>
+<div th:text="${message}" style="text-align: center; color: green;                                                        "></div>
 
 <main role="main" class="container">
 
@@ -36,7 +37,8 @@
             <tbody>
 
             <tr th:each="super:${supers}">
-                <td th:text="${super.name}">Name</td>
+                <td><span th:text="${super.name}"></span>        <div align="center" style="text-align: center;"><span  th:if="${super.villain} == true" style="text-align: center; color:red;"><i class="fas fa-book-dead"></i> </span> <span th:if="${super.villain} == false"  style="text-align: center; color:blue;"><i class="fas fa-meteor"></i></span> </div>                </span>
+                </td>
                 <td><span th:each="organization:${super.organizations}"><span th:text="${organization.name}"/><br></span></td>
                 <td><span th:each="power:${super.powers}"><span th:text="${power.name}"/><br></span></td>
                 <td th:text="${super.description}">Description</td>

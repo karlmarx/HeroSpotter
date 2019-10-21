@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Service
-public class ServiceImpl implements ServiceLayer {
+public class ServiceImpl  {
     private final String CURSE_FILE = "list.txt";
     private final List<String> ipsumList = new ArrayList<>(Arrays.asList("Lorem ipsum dolor amet distillery selfies glossier chia franzen, celiac esse sed pour-over non disrupt. Mlkshk narwhal poutine waistcoat, kale chips ethical cliche selvage cronut enim succulents mumblecore leggings. Food truck dreamcatcher farm-to-table mlkshk subway tile non nisi. Crucifix franzen pok pok, palo santo occaecat chambray wayfarers asymmetrical edison bulb yuccie disrupt in et. Migas craft beer kitsch, fingerstache umami food truck artisan consectetur consequat asymmetrical pour-over knausgaard duis.",
 
@@ -60,7 +60,6 @@ public class ServiceImpl implements ServiceLayer {
 //        pi.exec("with open(filepath) as fp:");
 //        pi.exec("    for line in fp.readlines():\n");
 //    }
-    @Override
     public boolean isStringProfane(String string) {
         List<String> curseList = getCurseList();
         for (String curse : curseList) {
@@ -79,7 +78,7 @@ public class ServiceImpl implements ServiceLayer {
         }
         return string;
     }
-    @Override
+
     public String generateFillerText() {
         Random random = new Random();
         int randomIndex = random.nextInt(ipsumList.size());

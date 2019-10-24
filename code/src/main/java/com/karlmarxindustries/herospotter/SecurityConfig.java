@@ -21,10 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
                 .antMatchers("/css/**","/js/**", "/", "/index", "/fragments/**", "/locations", "/powers", "/supers", "/sightings", "/organizations").access("permitAll()")
                 .antMatchers(HttpMethod.GET, "/deleteOrganization").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/deleteSighting").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/deleteSuper").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/deleteLocation").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/deletePower").hasRole("ADMIN")
                 .antMatchers( "/editLocation", "/editPowers", "/editOrganization", "/editSighting", "/editSuper").hasRole("ADMIN").and().
 //                .antMatchers(HttpMethod.POST, "/**").permitAll().and().
                // .requestCache().requestCache(new NullRequestCache()).and().

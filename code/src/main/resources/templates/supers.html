@@ -37,7 +37,7 @@
             <tbody>
 
             <tr th:each="super:${supers}">
-                <td><span th:text="${super.name}"></span>        <div align="center" style="text-align: center;"><span  th:if="${super.villain} == true" style="text-align: center; color:red;"><i class="fas fa-book-dead"></i> </span> <span th:if="${super.villain} == false"  style="text-align: center; color:blue;"><i class="fas fa-meteor"></i></span> </div>                </span>
+                <td><span th:text="${super.name}"></span>        <div align="center" style="text-align: center;">  </div>                </span>
                 </td>
                 <td><span th:each="organization:${super.organizations}"><span th:text="${organization.name}"/><br></span></td>
                 <td><span th:each="power:${super.powers}"><span th:text="${power.name}"/><br></span></td>

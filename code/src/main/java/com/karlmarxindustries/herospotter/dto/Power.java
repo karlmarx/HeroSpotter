@@ -1,10 +1,12 @@
 package com.karlmarxindustries.herospotter.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Data
 @Entity(name="powers")
 public class Power {
     @GeneratedValue(strategy= GenerationType.IDENTITY)

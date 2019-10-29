@@ -65,6 +65,8 @@ public class MVCController {
         return "fragments/stylingFragment :: locationModalContents";
     }
 
+
+
     @PostMapping("/addLocation")
     public String addLocation(Location location, HttpServletRequest request) {
         location.setPlaceId(request.getParameter("placeID"));

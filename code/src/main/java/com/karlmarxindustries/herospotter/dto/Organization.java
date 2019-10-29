@@ -1,9 +1,12 @@
 package com.karlmarxindustries.herospotter.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+
+@Data
 
 @Entity(name="organizations")
 //@AttributeOverride(name="id", column=@Column(name="org_id"))
